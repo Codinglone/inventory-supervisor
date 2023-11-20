@@ -1,3 +1,7 @@
+<?php 
+include './utils/link.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
