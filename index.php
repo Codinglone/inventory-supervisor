@@ -17,8 +17,8 @@ if(isset($_POST['login'])){
     else if($user_row['role'] == "cyber"){
         header("location: ./cyber/index.php");
     }
-    else if($user_row['role'] == "gym"){
-        header("location: ./gym/index.php");
+    else if($user_row['role'] == "supermarket"){
+        header("location: ./supermarket/index.php");
     }
     else if($user_row['role'] == "sauna-massage"){
         header("location: ./sauna-massage/index.php");
