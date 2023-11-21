@@ -35,6 +35,28 @@ if(isset($_POST['addCyberProduct'])) {
     }
   
   }
+
+  if(isset($_POST['addRestaurentProduct'])){
+    $restaurent_product_name = trim($_POST['productNameRestaurant']);
+    $restaurent_unit_price = filter_var($_POST['unitPriceRestaurant'], FILTER_VALIDATE_FLOAT);
+    if(empty($restaurent_product_name) || !$restaurent_unit_price){
+        $error = "Invalid product data";
+    }
+    else {
+        $stmt = $link->prepare("INSERT INTO restaurent_products(product_name, price) VALUES(?, ?)");
+        $stmt->bind_param("sd", $restaurent_product_name, $restaurent_unit_price);
+        if(!$stmt->execute()){
+            $error = $stmt->error;
+        }
+        else {
+            echo "<script>alert('Product added successfully!')</script>";
+        }
+    }
+    // Check for errors
+    if(isset($error)) {
+        echo "<script>alert('Error adding product. $error')</script>";
+      }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -159,20 +181,16 @@ main {
           <!-- Content for Restaurant Products tab -->
           <h3 class="mb-4">Restaurant Products</h3>
           <div class="card p-3" style="width: 800px;">
-            <form method="post" action="add_product.php">
+            <form method="POST">
               <div class="mb-3">
                 <label for="productNameRestaurant" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="productNameRestaurant" name="productNameRestaurant" required>
               </div>
               <div class="mb-3">
-                <label for="unitPriceRestaurant" class="form-label">Unit Price</label>
+                <label for="unitPriceRestaurant" class="form-label">Unit Price in RWF</label>
                 <input type="number" class="form-control" id="unitPriceRestaurant" name="unitPriceRestaurant" required>
               </div>
-              <div class="mb-3">
-                <label for="quantityRestaurant" class="form-label">Quantity</label>
-                <input type="number" class="form-control" id="quantityRestaurant" name="quantityRestaurant" required>
-              </div>
-              <button type="submit" class="btn btn-primary">Add Product</button>
+              <button type="submit" name="addRestaurentProduct" class="btn btn-primary">Add Product</button>
             </form>
           </div>
         </div>
