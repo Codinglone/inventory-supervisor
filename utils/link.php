@@ -1,5 +1,3 @@
 <?php 
-$link = new mysqli("localhost", "root", "", "inventory_supervisor")
-
-
+$link = new mysqli("localhost", "root", "", "inventory_supervisor");
 ?>
