@@ -176,6 +176,15 @@ main {
           <li class="nav-item">
             <a class="nav-link text-white" id="supermarketTab" data-bs-toggle="tab" href="#supermarketProducts"><i class="fas fa-cart-plus"></i> Supermarket Products</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i class="fas fa-eye"></i>View Cyber</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab" href="#restaurentView"><i class="fas fa-eye"></i>View Restaurent</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" id="supermarketViewTab" data-bs-toggle="tab" href="#supermarketView"><i class="fas fa-eye"></i>View Supermarket</a>
+          </li>
           <!-- Add more tabs as needed -->
         </ul>
       </div>
@@ -242,6 +251,156 @@ main {
               </div>
               <button type="submit" name="addRestaurentProduct" class="btn btn-primary">Add Product</button>
             </form>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="cyberView">
+          <!-- Content for Restaurant Products tab -->
+          <h3 class="mb-4">View Cyber Products</h3>
+          <div class="card p-3" style="width: 800px;">
+          <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th> 
+      <th>Product Name</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Product 1</td> 
+      <td>$50</td>
+      <td>5</td>
+      <td>
+        <button class="btn btn-danger btn-sm">Delete</button>
+        <button class="btn btn-secondary btn-sm">Update</button>  
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Product 2</td>
+      <td>$150</td>
+      <td>10</td> 
+      <td>
+        <button class="btn btn-danger btn-sm">Delete</button> 
+        <button class="btn btn-secondary btn-sm">Update</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="restaurentView">
+          <!-- Content for Restaurant Products tab -->
+          <h3 class="mb-4">View Restaurent Products</h3>
+          <div class="card p-3" style="width: 800px;">
+          <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th> 
+      <th>Product Name</th>
+      <th>Unit Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Product 1</td> 
+      <td>$50</td>
+      <td>
+        <button class="btn btn-danger btn-sm">Delete</button>
+        <button class="btn btn-secondary btn-sm">Update</button>  
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Product 2</td>
+      <td>$150</td>
+      <td>
+        <button class="btn btn-danger btn-sm">Delete</button> 
+        <button class="btn btn-secondary btn-sm">Update</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+          </div>
+        </div>
+        
+        <div class="tab-pane fade" id="supermarketView">
+          <!-- Content for Restaurant Products tab -->
+          <h3 class="mb-4">View Supermarket Products</h3>
+          <div class="card p-3" style="width: 800px;">
+          <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th> 
+      <th>Product Name</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Product 1</td> 
+      <td>$50</td>
+      <td>5</td>
+      <td>
+        <button class="btn btn-danger btn-sm">Delete</button>
+        <button class="btn btn-secondary btn-sm">Update</button>  
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Product 2</td>
+      <td>$150</td>
+      <td>10</td> 
+      <td>
+        <button class="btn btn-danger btn-sm">Delete</button> 
+        <button class="btn btn-secondary btn-sm">Update</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
           </div>
         </div>
         <!-- Add more tab panes as needed for additional functionality -->
