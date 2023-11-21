@@ -57,6 +57,31 @@ if(isset($_POST['addCyberProduct'])) {
         echo "<script>alert('Error adding product. $error')</script>";
       }
   }
+
+  if(isset($_POST['addSupermarketProduct'])){
+    $supermarket_product_name = trim($_POST['productNameSupermarket']);
+    $supermarket_unit_price = filter_var($_POST['unitPriceSupermarket'], FILTER_VALIDATE_FLOAT);
+    $supermarket_quantity = filter_var($_POST['quantitySupermarket'], FILTER_VALIDATE_INT);
+
+    if(empty($supermarket_product_name) || !$supermarket_unit_price || !$supermarket_quantity){
+      $error = "Invalid product data";
+    }
+    else {
+      $stmt = $link->prepare("INSERT INTO supermarket_products(product_name,unit_price,quantity) VALUES(?, ?, ?)");
+      $stmt->bind_param("sdi", $supermarket_product_name, $supermarket_unit_price, $supermarket_quantity);
+
+      if(!$stmt->execute()){
+        $error = $stmt->error;
+      }
+      else {
+        echo "<script>alert('Product added successfully!')</script>";
+      }
+    }
+    // Check for errors
+    if(isset($error)) {
+      echo "<script>alert('Error adding product. $error')</script>";
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -148,6 +173,9 @@ main {
           <li class="nav-item">
             <a class="nav-link text-white" id="restaurantTab" data-bs-toggle="tab" href="#restaurantProducts"><i class="fas fa-utensils"></i> Restaurant Products</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" id="supermarketTab" data-bs-toggle="tab" href="#supermarketProducts"><i class="fas fa-cart-plus"></i> Supermarket Products</a>
+          </li>
           <!-- Add more tabs as needed -->
         </ul>
       </div>
@@ -173,6 +201,28 @@ main {
                 <input type="number" class="form-control" id="quantityCyber" name="quantityCyber" required>
               </div>
               <button type="submit" name="addCyberProduct" class="btn btn-primary">Add Product</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="tab-pane fade show" id="supermarketProducts">
+          <!-- Content for Cyber Products tab -->
+          <h3 class="mb-4">Supermarket Products</h3>
+          <div class="card p-3" style="width: 800px;">
+            <form method="POST">
+              <div class="mb-3">
+                <label for="productNameCyber" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="productNameCyber" name="productNameSupermarket" required>
+              </div>
+              <div class="mb-3">
+                <label for="unitPriceCyber" class="form-label">Unit Price in RWF</label>
+                <input type="number" class="form-control" id="unitPriceCyber" name="unitPriceSupermarket" required>
+              </div>
+              <div class="mb-3">
+                <label for="quantityCyber" class="form-label">Quantity</label>
+                <input type="number" class="form-control" id="quantityCyber" name="quantitySupermarket" required>
+              </div>
+              <button type="submit" name="addSupermarketProduct" class="btn btn-primary">Add Product</button>
             </form>
           </div>
         </div>
