@@ -1,9 +1,40 @@
 <?php 
 session_start();
+include '../utils/link.php';
 $logged_user = $_SESSION['accountant'];
 if(is_null($logged_user)){
     header("location: ../index.php");
 }
+
+if(isset($_POST['addCyberProduct'])) {
+
+    // Validate inputs
+    $cyber_product_name = trim($_POST['productNameCyber']);
+    $cyber_unit_price = filter_var($_POST['unitPriceCyber'], FILTER_VALIDATE_FLOAT);
+    $cyber_quantity = filter_var($_POST['quantityCyber'], FILTER_VALIDATE_INT);
+  
+    if(empty($cyber_product_name) || !$cyber_unit_price || !$cyber_quantity) {
+      $error = 'Invalid product data';
+    } else {
+  
+      // Insert with prepared statement 
+      $stmt = $link->prepare("INSERT INTO cyber_products(product_name, quantity, price_per_unit) VALUES(?, ?, ?)");
+      
+      $stmt->bind_param("sid", $cyber_product_name, $cyber_quantity, $cyber_unit_price);
+      
+      if(!$stmt->execute()) {
+        $error = $stmt->error; 
+      } else {
+        echo "<script>alert('Product added successfully!')</script>";
+      } 
+    }
+    
+    // Check for errors
+    if(isset($error)) {
+      echo "Error adding product: " . $error;
+    }
+  
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,20 +137,20 @@ main {
           <!-- Content for Cyber Products tab -->
           <h3 class="mb-4">Cyber Products</h3>
           <div class="card p-3" style="width: 800px;">
-            <form method="post" action="add_product.php">
+            <form method="POST">
               <div class="mb-3">
                 <label for="productNameCyber" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="productNameCyber" name="productNameCyber" required>
               </div>
               <div class="mb-3">
-                <label for="unitPriceCyber" class="form-label">Unit Price</label>
+                <label for="unitPriceCyber" class="form-label">Unit Price in RWF</label>
                 <input type="number" class="form-control" id="unitPriceCyber" name="unitPriceCyber" required>
               </div>
               <div class="mb-3">
                 <label for="quantityCyber" class="form-label">Quantity</label>
                 <input type="number" class="form-control" id="quantityCyber" name="quantityCyber" required>
               </div>
-              <button type="submit" class="btn btn-primary">Add Product</button>
+              <button type="submit" name="addCyberProduct" class="btn btn-primary">Add Product</button>
             </form>
           </div>
         </div>
