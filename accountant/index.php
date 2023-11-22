@@ -271,15 +271,8 @@ main {
 
   <tbody>
     <?php 
-    $count = 1;
-    // Configure pagination 
-$results_per_page = 2;
-$page = 1;
-if(isset($_GET['page'])) {
-  $page = $_GET['page']; 
-}
-$offset = ($page - 1) * $results_per_page;
-    $cyber_sel = $link->query("SELECT * FROM cyber_products LIMIT $offset, $results_per_page");
+    $count = 0;
+    $cyber_sel = $link->query("SELECT * FROM cyber_products");
     while($rows = mysqli_fetch_array($cyber_sel)){
     $count += 1;
     ?>
@@ -298,26 +291,6 @@ $offset = ($page - 1) * $results_per_page;
   </tbody>
 </table>
 
-<nav>
-<ul class="pagination">
-      <?php if ($page > 1) { ?>
-        <li class="page-item"><a class="page-link" href="?page=<?php echo $page-1 ?>">Previous</a></li>
-      <?php } ?>
-      
-      <?php
-        $num_products = $link->query("SELECT count(*) AS cnt FROM cyber_products")->fetch_array()['cnt'];
-        $total_pages = ceil($num_products / $results_per_page);
-        
-        for($i=1; $i<=$total_pages; $i++) { 
-          echo '<li class="page-item"><a class="page-link" href="?page='.$i.'">'.$i.'</a></li>';
-        }  
-      ?>
-      
-      <?php if ($page < $total_pages) { ?>
-        <li class="page-item"><a class="page-link" href="?page=<?php echo $page+1 ?>">Next</a></li>
-      <?php } ?>
-    </ul>
-</nav>
           </div>
         </div>
 
@@ -336,36 +309,25 @@ $offset = ($page - 1) * $results_per_page;
   </thead>
 
   <tbody>
+  <?php 
+    $count = 0;
+    $restaurent_sel = $link->query("SELECT * FROM restaurent_products");
+    while($rows = mysqli_fetch_array($restaurent_sel)){
+    $count += 1;
+    ?>
     <tr>
-      <td>1</td>
-      <td>Product 1</td> 
-      <td>$50</td>
+    <td><?php echo $count; ?></td>
+      <td><?php echo $rows['product_name']; ?></td> 
+      <td><?php echo $rows['price']; ?></td>
       <td>
         <button class="btn btn-danger btn-sm">Delete</button>
         <button class="btn btn-secondary btn-sm">Update</button>  
       </td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>Product 2</td>
-      <td>$150</td>
-      <td>
-        <button class="btn btn-danger btn-sm">Delete</button> 
-        <button class="btn btn-secondary btn-sm">Update</button>
-      </td>
-    </tr>
+    <?php } ?>
   </tbody>
 </table>
 
-<nav>
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
           </div>
         </div>
         
@@ -385,38 +347,26 @@ $offset = ($page - 1) * $results_per_page;
   </thead>
 
   <tbody>
-    <tr>
-      <td>1</td>
-      <td>Product 1</td> 
-      <td>$50</td>
-      <td>5</td>
+  <?php 
+    $count = 0;
+    $supermarket_sel = $link->query("SELECT * FROM supermarket_products");
+    while($rows = mysqli_fetch_array($supermarket_sel)){
+    $count += 1;
+    ?>
+     <tr>
+      <td><?php echo $count; ?></td>
+      <td><?php echo $rows['product_name']; ?></td> 
+      <td><?php echo $rows['unit_price']; ?></td>
+      <td><?php echo $rows['quantity']; ?></td>
       <td>
         <button class="btn btn-danger btn-sm">Delete</button>
         <button class="btn btn-secondary btn-sm">Update</button>  
       </td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>Product 2</td>
-      <td>$150</td>
-      <td>10</td> 
-      <td>
-        <button class="btn btn-danger btn-sm">Delete</button> 
-        <button class="btn btn-secondary btn-sm">Update</button>
-      </td>
-    </tr>
+    <?php } ?>
+   
   </tbody>
 </table>
-
-<nav>
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
           </div>
         </div>
         <!-- Add more tab panes as needed for additional functionality -->
