@@ -189,7 +189,7 @@ if (isset($_POST['sellProduct'])) {
 
                     <div class="tab-pane fade" id="cyberView">
                         <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Cyber Products</h3>
+                        <h3 class="mb-4">View Remaining Products</h3>
                         <div class="card p-3" style="width: 800px;">
                             <table class="table table-bordered">
                                 <thead>
@@ -233,7 +233,7 @@ if (isset($_POST['sellProduct'])) {
 
                     <div class="tab-pane fade" id="restaurentView">
                         <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Sod Products</h3>
+                        <h3 class="mb-4">View Sold Products</h3>
                         <div class="card p-3" style="width: 800px;">
                             <table class="table table-bordered">
                                 <thead>
@@ -241,13 +241,15 @@ if (isset($_POST['sellProduct'])) {
                                         <th>#</th>
                                         <th>Product Name</th>
                                         <th>Unit Price in RWF</th>
+                                        <th>Quantity</th>
+                                        <th>Date sold</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <?php
                                     $count = 0;
-                                    $restaurent_sel = $link->query("SELECT * FROM restaurent_products");
+                                    $restaurent_sel = $link->query("SELECT * FROM cyber_products_transactions");
                                     while ($rows = mysqli_fetch_array($restaurent_sel)) {
                                         $count += 1;
                                         $id = $rows['id'];
@@ -260,7 +262,13 @@ if (isset($_POST['sellProduct'])) {
                                                 <?php echo $rows['product_name']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['price']; ?>
+                                                <?php echo $rows['price_per_unit']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['quantity']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['dates']; ?>
                                             </td>
                                         </tr>
                                     <?php } ?>
