@@ -345,8 +345,8 @@ if (isset($_POST['addSupermarketProduct'])) {
                         <?php echo $rows['price']; ?>
                       </td>
                       <td>
-                      <a href="deleteRestaurent.php?id=<?php echo $id; ?>" class="btn btn-danger btn-sm">Delete</a>
-                      <a href="updateRestaurent.php?id=<?php echo $id; ?>" class="btn btn-secondary btn-sm">Update</a>
+                        <a href="deleteRestaurent.php?id=<?php echo $id; ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="updateRestaurent.php?id=<?php echo $id; ?>" class="btn btn-secondary btn-sm">Update</a>
                       </td>
                     </tr>
                   <?php } ?>
