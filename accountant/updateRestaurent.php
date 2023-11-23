@@ -98,28 +98,28 @@ if (is_null($logged_user)) {
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link text-white" id="cyberTab" href="#cyberProducts"><i
-                  class="fas fa-laptop"></i> Cyber Products</a>
+              <a class="nav-link text-white" id="cyberTab" href="#cyberProducts"><i class="fas fa-laptop"></i> Cyber
+                Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" id="restaurantTab" href="index.php"><i
-                  class="fas fa-utensils"></i> Restaurant Products</a>
+              <a class="nav-link text-white" id="restaurantTab" href="index.php"><i class="fas fa-utensils"></i>
+                Restaurant Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" id="supermarketTab" href="index.php"><i
-                  class="fas fa-cart-plus"></i> Supermarket Products</a>
+              <a class="nav-link text-white" id="supermarketTab" href="index.php"><i class="fas fa-cart-plus"></i>
+                Supermarket Products</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i
                   class="fas fa-eye"></i>View Cyber</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" id="restaurentViewTab" href="index.php"><i
-                  class="fas fa-eye"></i>View Restaurent</a>
+              <a class="nav-link text-white" id="restaurentViewTab" href="index.php"><i class="fas fa-eye"></i>View
+                Restaurent</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" id="supermarketViewTab"  href="index.php"><i
-                  class="fas fa-eye"></i>View Supermarket</a>
+              <a class="nav-link text-white" id="supermarketViewTab" href="index.php"><i class="fas fa-eye"></i>View
+                Supermarket</a>
             </li>
             <!-- Add more tabs as needed -->
           </ul>
@@ -131,36 +131,38 @@ if (is_null($logged_user)) {
           <div class="tab-pane fade active show" id="cyberView">
             <!-- Content for Cyber Products tab -->
             <h3 class="mb-4">Update Restaurent Product</h3>
-            <?php 
-            if(isset($_GET['id'])){
-                $id = $_GET['id'];
-                $sql = "SELECT * FROM restaurent_products WHERE id = '$id'";
-                $result = $link->query($sql);
-                $row = mysqli_fetch_array($result);
+            <?php
+            if (isset($_GET['id'])) {
+              $id = $_GET['id'];
+              $sql = "SELECT * FROM restaurent_products WHERE id = '$id'";
+              $result = $link->query($sql);
+              $row = mysqli_fetch_array($result);
 
-                if(isset($_POST['updateRestaurentProduct'])){
-                    $product_update = $link->query("UPDATE restaurent_products SET product_name = '$_POST[productNameRestaurent]', price = '$_POST[unitPriceRestaurent]' WHERE id = '$id'");
-                    if($product_update){
-                        echo "<script>window.location.replace('index.php')</script>";
-                    }else{
-                        echo "<script>alert('Failed to update product')</script>";
+              if (isset($_POST['updateRestaurentProduct'])) {
+                $product_update = $link->query("UPDATE restaurent_products SET product_name = '$_POST[productNameRestaurent]', price = '$_POST[unitPriceRestaurent]' WHERE id = '$id'");
+                if ($product_update) {
+                  echo "<script>window.location.replace('index.php')</script>";
+                } else {
+                  echo "<script>alert('Failed to update product')</script>";
                 }
-            }
-            
-            ?>
-            <div class="card p-3" style="width: 800px;">
-              <form method="POST">
-                <div class="mb-3">
-                  <label for="productNameRestaurent" class="form-label">Product Name</label>
-                  <input type="text" class="form-control" value="<?php echo $row['product_name'] ?>" id="productNameCyber" name="productNameRestaurent" required>
-                </div>
-                <div class="mb-3">
-                  <label for="unitPriceRestaurent" class="form-label">Unit Price in RWF</label>
-                  <input type="number" class="form-control"  value="<?php echo $row['price'] ?>" id="unitPriceCyber" name="unitPriceRestaurent" required>
-                </div>
-                <button type="submit" name="updateRestaurentProduct" class="btn btn-primary">Update Product</button>
-              </form>
-            </div>
+              }
+
+              ?>
+              <div class="card p-3" style="width: 800px;">
+                <form method="POST">
+                  <div class="mb-3">
+                    <label for="productNameRestaurent" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" value="<?php echo $row['product_name'] ?>"
+                      id="productNameCyber" name="productNameRestaurent" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="unitPriceRestaurent" class="form-label">Unit Price in RWF</label>
+                    <input type="number" class="form-control" value="<?php echo $row['price'] ?>" id="unitPriceCyber"
+                      name="unitPriceRestaurent" required>
+                  </div>
+                  <button type="submit" name="updateRestaurentProduct" class="btn btn-primary">Update Product</button>
+                </form>
+              </div>
             <?php } ?>
           </div>
 

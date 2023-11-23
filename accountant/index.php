@@ -272,7 +272,7 @@ if (isset($_POST['addSupermarketProduct'])) {
                   <tr>
                     <th>#</th>
                     <th>Product Name</th>
-                    <th>Unit Price</th>
+                    <th>Unit Price n RWF</th>
                     <th>Quantity</th>
                     <th>Actions</th>
                   </tr>
@@ -321,7 +321,7 @@ if (isset($_POST['addSupermarketProduct'])) {
                   <tr>
                     <th>#</th>
                     <th>Product Name</th>
-                    <th>Unit Price</th>
+                    <th>Unit Price in RWF</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -365,7 +365,7 @@ if (isset($_POST['addSupermarketProduct'])) {
                   <tr>
                     <th>#</th>
                     <th>Product Name</th>
-                    <th>Unit Price</th>
+                    <th>Unit Price in RWF</th>
                     <th>Quantity</th>
                     <th>Actions</th>
                   </tr>
@@ -393,7 +393,7 @@ if (isset($_POST['addSupermarketProduct'])) {
                         <?php echo $rows['quantity']; ?>
                       </td>
                       <td>
-                      <a href="deleteSupermarket.php?id=<?php echo $id; ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="deleteSupermarket.php?id=<?php echo $id; ?>" class="btn btn-danger btn-sm">Delete</a>
                         <a href="updateSupermarket.php?id=<?php echo $id; ?>" class="btn btn-secondary btn-sm">Update</a>
                       </td>
                     </tr>
