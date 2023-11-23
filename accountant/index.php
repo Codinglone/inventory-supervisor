@@ -377,6 +377,7 @@ if (isset($_POST['addSupermarketProduct'])) {
                   $supermarket_sel = $link->query("SELECT * FROM supermarket_products");
                   while ($rows = mysqli_fetch_array($supermarket_sel)) {
                     $count += 1;
+                    $id = $rows['id'];
                     ?>
                     <tr>
                       <td>
@@ -392,8 +393,8 @@ if (isset($_POST['addSupermarketProduct'])) {
                         <?php echo $rows['quantity']; ?>
                       </td>
                       <td>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                        <button class="btn btn-secondary btn-sm">Update</button>
+                      <a href="deleteSupermarket.php?id=<?php echo $id; ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="updateSupermarket.php?id=<?php echo $id; ?>" class="btn btn-secondary btn-sm">Update</a>
                       </td>
                     </tr>
                   <?php } ?>
