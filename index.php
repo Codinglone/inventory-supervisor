@@ -16,6 +16,7 @@ if (isset($_POST['login'])) {
         $_SESSION['cyber'] = $user_row['email'];
         header("location: ./cyber/index.php");
     } else if ($user_row['role'] == "supermarket") {
+        $_SESSION['supermarket'] = $user_row['email'];
         header("location: ./supermarket/index.php");
     } else if ($user_row['role'] == "sauna-massage") {
         header("location: ./sauna-massage/index.php");
