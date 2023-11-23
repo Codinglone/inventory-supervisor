@@ -272,7 +272,7 @@ if (isset($_POST['addSupermarketProduct'])) {
                   <tr>
                     <th>#</th>
                     <th>Product Name</th>
-                    <th>Unit Price n RWF</th>
+                    <th>Unit Price in RWF</th>
                     <th>Quantity</th>
                     <th>Actions</th>
                   </tr>
