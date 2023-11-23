@@ -98,15 +98,15 @@ if (is_null($logged_user)) {
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab" href="#cyberProducts"><i
+              <a class="nav-link text-white" id="cyberTab" href="#cyberProducts"><i
                   class="fas fa-laptop"></i> Cyber Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" id="restaurantTab" data-bs-toggle="tab" href="#restaurantProducts"><i
+              <a class="nav-link text-white" id="restaurantTab" href="index.php"><i
                   class="fas fa-utensils"></i> Restaurant Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" id="supermarketTab" data-bs-toggle="tab" href="#supermarketProducts"><i
+              <a class="nav-link text-white" id="supermarketTab" href="index.php"><i
                   class="fas fa-cart-plus"></i> Supermarket Products</a>
             </li>
             <li class="nav-item">
@@ -114,11 +114,11 @@ if (is_null($logged_user)) {
                   class="fas fa-eye"></i>View Cyber</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab" href="#restaurentView"><i
+              <a class="nav-link text-white" id="restaurentViewTab" href="index.php"><i
                   class="fas fa-eye"></i>View Restaurent</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" id="supermarketViewTab" data-bs-toggle="tab" href="#supermarketView"><i
+              <a class="nav-link text-white" id="supermarketViewTab"  href="index.php"><i
                   class="fas fa-eye"></i>View Supermarket</a>
             </li>
             <!-- Add more tabs as needed -->
