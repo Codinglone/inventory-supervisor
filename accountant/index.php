@@ -301,7 +301,7 @@ if (isset($_POST['addSupermarketProduct'])) {
                       </td>
                       <td>
                         <a href="deleteCyber.php?id=<?php echo $id; ?>" class="btn btn-danger btn-sm">Delete</a>
-                        <button class="btn btn-secondary btn-sm">Update</button>
+                        <a href="updateCyber.php?id=<?php echo $id; ?>" class="btn btn-secondary btn-sm">Update</a>
                       </td>
                     </tr>
                   <?php } ?>
