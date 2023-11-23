@@ -15,6 +15,7 @@ if(isset($_POST['login'])){
         header("location: ./manager/index.php");
     }
     else if($user_row['role'] == "cyber"){
+        $_SESSION['cyber'] = $user_row['email'];
         header("location: ./cyber/index.php");
     }
     else if($user_row['role'] == "supermarket"){
