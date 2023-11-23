@@ -25,6 +25,7 @@ if(isset($_POST['login'])){
         header("location: ./sauna-massage/index.php");
     }
     else if($user_row['role'] == "restaurent"){
+        $_SESSION['restaurent'] = $user_row['email'];
         header("location: ./restaurent/index.php");
     }
     else if($user_row['role'] == "reception"){
