@@ -24,6 +24,7 @@ if (isset($_POST['login'])) {
         $_SESSION['restaurent'] = $user_row['email'];
         header("location: ./restaurent/index.php");
     } else if ($user_row['role'] == "reception") {
+        $_SESSION['reception'] = $user_row['email'];
         header("location: ./reception/index.php");
     } else if ($user_row['role'] == "technician") {
         header("location: ./IT/index.php");
