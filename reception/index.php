@@ -167,29 +167,34 @@ if (isset($_POST['sellProduct'])) {
                         <h3 class="mb-4">Register Gym Client</h3>
                         <div class="card p-3" style="width: 800px;">
                             <form method="POST">
+                            <div class="mb-3">
+                                    <label for="clientName" class="form-label">Client Name</label>
+                                    <input type="text" class="form-control" id="clientName" name="clientName"
+                                        required>
+                                </div>
                                 <div class="mb-3">
-                                    <label for="productNameCyber" class="form-label">Client Name</label>
-                                    <select class="form-select" name="productNameCyber"
-                                        aria-label="Default select example">
-                                        <option selected>Select Product</option>
-                                        <?php
-                                        $cyber_sel = $link->query("SELECT * FROM cyber_products");
-                                        while ($rows = mysqli_fetch_array($cyber_sel)) {
-                                            $id = $rows['id'];
-                                            ?>
-                                            <option value="<?php echo $id; ?>">
-                                                <?php echo $rows['product_name']; ?>
-                                            </option>
-                                        <?php } ?>
+                                    <label for="productNameCyber" class="form-label">Membership Type</label>
+                                    <select class="form-select" name="membershipType"
+                                        aria-label="Default select example" required>
+                                        <option value="Daily" selected>Daily</option>
+                                        <option value="Monthly">Monthly</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="quantityCyber" class="form-label">Quantity</label>
-                                    <input type="number" class="form-control" id="quantityCyber" name="quantityCyber"
+                                    <label for="productNameCyber" class="form-label">Organization</label>
+                                    <select class="form-select" name="productNameCyber"
+                                        aria-label="Default select example">
+                                        <option value="Personal">Personal</option>
+                                        <option value="RDB">RDB</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="amountPaid" class="form-label">Amount Paid</label>
+                                    <input type="number" class="form-control" id="amountPaid" name="amountPaid"
                                         required>
                                 </div>
-                                <button type="submit" name="sellProduct" class="btn btn-primary">Sell
-                                    Product</button>
+                                <button type="submit" name="registerClient" class="btn btn-primary">Register
+                                    Client</button>
                             </form>
                         </div>
                     </div>
