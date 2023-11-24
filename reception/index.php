@@ -21,12 +21,12 @@ if (isset($_POST['registerClient'])) {
         $stmt = $link->prepare("INSERT INTO gym_clients(fullname, membership_type, organization,dates, amount_paid) VALUES(?, ?, ?, ?, ?)");
         $date = date("Y-m-d");
         $stmt->bind_param("ssssi", $client_name, $membership_type, $organization_name, $date, $amount_paid);
-            if (!$stmt->execute()) {
-                $error = $stmt->error;
-            } else {
-                echo "<script>alert('Client was registered successfully!')</script>";
-            }
-        
+        if (!$stmt->execute()) {
+            $error = $stmt->error;
+        } else {
+            echo "<script>alert('Client was registered successfully!')</script>";
+        }
+
     }
 
     // Check for errors
