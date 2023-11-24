@@ -6,35 +6,27 @@ if (is_null($logged_user)) {
     header("location: ../index.php");
 }
 
-if (isset($_POST['sellProduct'])) {
+if (isset($_POST['registerClient'])) {
 
     // Validate inputs
-    $cyber_product_id = trim($_POST['productNameCyber']);
-    $cyber_quantity = filter_var($_POST['quantityCyber'], FILTER_VALIDATE_INT);
+    $client_name = trim($_POST['clientName']);
+    $membership_type = trim($_POST['membershipType']);
+    $organization_name = trim($_POST['organizationName']);
+    $amount_paid = filter_var($_POST['amountPaid'], FILTER_VALIDATE_INT);
 
-    if (empty($cyber_product_id) || !$cyber_quantity) {
+    if (empty($client_name) || empty($membership_type) || empty($organization_name) || !$amount_paid) {
         $error = 'Invalid product data';
     } else {
-        $stmt_product = $link->prepare("SELECT * FROM cyber_products WHERE id = ?");
-        $stmt_product->bind_param("i", $cyber_product_id);
-        $stmt_product->execute();
-        $result_product = $stmt_product->get_result();
-        $row = $result_product->fetch_assoc();
         // Insert with prepared statement 
-        $stmt = $link->prepare("INSERT INTO cyber_products_transactions(product_name, quantity, price_per_unit,dates) VALUES(?, ?, ?, ?)");
+        $stmt = $link->prepare("INSERT INTO gym_clients(fullname, membership_type, organization,dates, amount_paid) VALUES(?, ?, ?, ?, ?)");
         $date = date("Y-m-d");
-        $stmt->bind_param("sids", $row['product_name'], $cyber_quantity, $row['price_per_unit'], $date);
-        if ($row['quantity'] < $cyber_quantity) {
-            echo "<script>alert('You have only " . $row['quantity'] . " " . $row['product_name'] . " in stock')</script>";
-        } else {
-            $remaining_product_quantity = (int) $row['quantity'] - (int) $cyber_quantity;
-            $update_product = $link->query("UPDATE cyber_products SET quantity='$remaining_product_quantity' WHERE id='$cyber_product_id'");
-            if (!$stmt->execute() || !$update_product) {
+        $stmt->bind_param("ssssi", $client_name, $membership_type, $organization_name, $date, $amount_paid);
+            if (!$stmt->execute()) {
                 $error = $stmt->error;
             } else {
-                echo "<script>alert('Product sold successfully!')</script>";
+                echo "<script>alert('Client was registered successfully!')</script>";
             }
-        }
+        
     }
 
     // Check for errors
@@ -140,8 +132,8 @@ if (isset($_POST['sellProduct'])) {
                                 href="#cyberProducts"><i class="fas fa-dumbbell"></i>Add Gym Client</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#cyberProducts"><i class="fas fa-bed"></i>Register Room</a>
+                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab" href="#cyberProducts"><i
+                                    class="fas fa-bed"></i>Register Room</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i
@@ -167,10 +159,9 @@ if (isset($_POST['sellProduct'])) {
                         <h3 class="mb-4">Register Gym Client</h3>
                         <div class="card p-3" style="width: 800px;">
                             <form method="POST">
-                            <div class="mb-3">
+                                <div class="mb-3">
                                     <label for="clientName" class="form-label">Client Name</label>
-                                    <input type="text" class="form-control" id="clientName" name="clientName"
-                                        required>
+                                    <input type="text" class="form-control" id="clientName" name="clientName" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="productNameCyber" class="form-label">Membership Type</label>
@@ -182,16 +173,24 @@ if (isset($_POST['sellProduct'])) {
                                 </div>
                                 <div class="mb-3">
                                     <label for="productNameCyber" class="form-label">Organization</label>
-                                    <select class="form-select" name="productNameCyber"
+                                    <select class="form-select" name="organizationName"
                                         aria-label="Default select example">
-                                        <option value="Personal">Personal</option>
-                                        <option value="RDB">RDB</option>
+                                        <option value="Personal" selected>Personal</option>
+                                        <?php
+                                        $organization_sel = $link->query("SELECT * FROM gym_organizations");
+                                        while ($row = mysqli_fetch_array($organization_sel)) {
+                                            ?>
+                                            <option value="<?php echo $row['organization_name']; ?>">
+                                                <?php echo $row['organization_name']; ?>
+                                            </option>
+                                        <?php } ?>
                                     </select>
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="amountPaid" class="form-label">Amount Paid</label>
-                                    <input type="number" class="form-control" id="amountPaid" name="amountPaid"
-                                        required>
+                                    <input type="number" class="form-control" value="0" id="amountPaid"
+                                        name="amountPaid" required>
                                 </div>
                                 <button type="submit" name="registerClient" class="btn btn-primary">Register
                                     Client</button>
