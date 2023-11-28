@@ -6,82 +6,27 @@ if (is_null($logged_user)) {
     header("location: ../index.php");
 }
 
-if (isset($_POST['registerClient'])) {
+if (isset($_POST['addOrganization'])) {
 
     // Validate inputs
-    $client_name = trim($_POST['clientName']);
-    $membership_type = trim($_POST['membershipType']);
     $organization_name = trim($_POST['organizationName']);
-    $amount_paid = filter_var($_POST['amountPaid'], FILTER_VALIDATE_INT);
 
-    if (empty($client_name) || empty($membership_type) || empty($organization_name) || !$amount_paid) {
-        $error = 'Invalid product data';
+    if (empty($organization_name)) {
+        $error = 'Invalid organization name';
     } else {
         // Insert with prepared statement 
-        $stmt = $link->prepare("INSERT INTO gym_clients(fullname, membership_type, organization,dates, amount_paid) VALUES(?, ?, ?, ?, ?)");
+        $stmt = $link->prepare("INSERT INTO gym_organizations(organization_name, date_registered) VALUES(?, NOW())");
         $date = date("Y-m-d");
-        $stmt->bind_param("ssssi", $client_name, $membership_type, $organization_name, $date, $amount_paid);
+        $stmt->bind_param("s", $organization_name);
         if (!$stmt->execute()) {
             $error = $stmt->error;
         } else {
-            echo "<script>alert('Client was registered successfully!')</script>";
+            echo "<script>alert('Organization was registered!')</script>";
         }
 
     }
 }
-if (isset($_POST['registerRoom'])) {
-    $room_name = trim($_POST['RoomName']);
-    $room_price = filter_var($_POST['roomPrice'], FILTER_VALIDATE_INT);
-    $room_status = trim($_POST['roomStatus']);
 
-    if (empty($room_name) || !$room_price || empty($room_status)) {
-        $error = 'Invalid product data';
-    } else {
-        // Insert with prepared statement 
-        $stmt = $link->prepare("INSERT INTO rooms(room_name, room_price, room_status) VALUES(?, ?, ?)");
-        $date = date("Y-m-d");
-        $stmt->bind_param("sis", $room_name, $room_price, $room_status);
-        if (!$stmt->execute()) {
-            $error = $stmt->error;
-        } else {
-            echo "<script>alert('Room was registered successfully!')</script>";
-        }
-    }
-
-    // Check for errors
-    if (isset($error)) {
-        echo "Error registering room: " . $error;
-    }
-}
-
-if (isset($_POST['registerRoomClient'])) {
-    $client_name = trim($_POST['fullName']);
-    $client_email = trim($_POST['email']);
-    $client_phone = trim($_POST['phone']);
-    $client_ID = trim($_POST['ID']);
-    $checkin_date = trim($_POST['checkin_date']);
-    $checkout_date = trim($_POST['checkout_date']);
-    $roomId = filter_var($_POST['roomId'], FILTER_VALIDATE_INT);
-    $amount_paid = filter_var($_POST['amountPaid'], FILTER_VALIDATE_INT);
-
-    if (empty($client_name) || empty($client_email) || empty($client_phone) || empty($client_ID) || empty($checkin_date) || empty($checkout_date) || !$roomId || !$amount_paid) {
-        $error = 'Invalid client info';
-    } else {
-        // Insert with prepared statement 
-        $stmt = $link->prepare("INSERT INTO rooms_clients(fullname, email, phone, id_number, checkin_date, checkout_date, room_id, amount_paid) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssii", $client_name, $client_email, $client_phone, $client_ID, $checkin_date, $checkout_date, $roomId, $amount_paid);
-        if (!$stmt->execute()) {
-            $error = $stmt->error;
-        } else {
-            echo "<script>alert('Room Client was registered successfully!')</script>";
-        }
-    }
-
-    // Check for errors
-    if (isset($error)) {
-        echo "Error registering room client: " . $error;
-    }
-}
 
 
 
@@ -181,12 +126,56 @@ if (isset($_POST['registerRoomClient'])) {
                                 href="#gymView"><i class="fas fa-chart-bar"></i>Dashboard</a>
                         </li>
                         <li class="nav-item">
+              <a class="nav-link text-white" id="restaurantTab" data-bs-toggle="tab" href="#organization"><i
+                  class="fas fa-building"></i> Add Gym Organization</a>
+            </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#roomsView"><i
-                                    class="fas fa-eye"></i>View Rooms</a>
+                                    class="fas fa-eye"></i>View All Rooms</a>
+                        </li>
+                        <li class="nav-item">
+              <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab" href="#restaurentView"><i
+                  class="fas fa-eye"></i>View Resto Products</a>
+            </li>
+                        <li class="nav-item">
+              <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i
+                  class="fas fa-eye"></i>View Cyber Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" id="supermarketViewTab" data-bs-toggle="tab" href="#supermarketView"><i
+                  class="fas fa-eye"></i>View Supermarket</a>
+            </li>
+            <li class="nav-item">
+                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#saunaView"><i
+                                    class="fas fa-eye"></i>View Sauna & Massage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#gymClientView"><i
+                                    class="fas fa-eye"></i>View Gym Clients</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#gymOrganizationView"><i
+                                    class="fas fa-eye"></i>All Gym Organizations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab"
+                                href="#roomClientsView"><i class="fas fa-eye"></i>View Room Clients</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
-                                href="#roomClientsView"><i class="fas fa-eye"></i>View Room Clients</a>
+                                href="#restaurentView"><i class="fas fa-eye"></i>Restaurent Transactions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
+                                href="#cyberTransactions"><i class="fas fa-eye"></i>Cyber Transactions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
+                                href="#supermarketTransactions"><i class="fas fa-eye"></i>All Supermarket Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
+                                href="#usersView"><i class="fas fa-eye"></i>View All Users</a>
                         </li>
                         <!-- Add more tabs as needed -->
                     </ul>
@@ -297,6 +286,536 @@ if (isset($_POST['registerRoomClient'])) {
                         </div>
                     </div>
 
+                    <div class="tab-pane fade" id="saunaView">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View Sauna & Massage Clients</h3>
+                        <div class="card p-3" style="width: 1000px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fullname</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Service Type</th>
+                                        <th>Amount Paid</th>
+                                        <th>Date Recorded</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $sauna_sel = $link->query("SELECT * FROM sauna_massage_clients");
+                                    while ($rows = mysqli_fetch_array($sauna_sel)) {
+                                        $count += 1;
+                                        $id = $rows['id'];
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['fullname']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['email']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['phone']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['service_type']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['amount_paid']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['dates']; ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="cyberView">
+            <!-- Content for Restaurant Products tab -->
+            <h3 class="mb-4">View Cyber Products</h3>
+            <div class="card p-3" style="width: 800px;">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Unit Price in RWF</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <?php
+                  $count = 0;
+                  $cyber_sel = $link->query("SELECT * FROM cyber_products");
+                  while ($rows = mysqli_fetch_array($cyber_sel)) {
+                    $count += 1;
+                    $id = $rows['id'];
+                    ?>
+                    <tr>
+                      <td>
+                        <?php echo $count; ?>
+                      </td>
+                      <td>
+                        <?php echo $rows['product_name']; ?>
+                      </td>
+                      <td>
+                        <?php echo $rows['price_per_unit']; ?>
+                      </td>
+                      <td>
+                        <?php echo $rows['quantity']; ?>
+                      </td>
+                    </tr>
+                  <?php } ?>
+
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+          
+          <div class="tab-pane fade" id="restaurentView">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View All Restaurent Transactions</h3>
+                        <div class="card p-3" style="width: 800px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product Name</th>
+                                        <th>Unit Price in RWF</th>
+                                        <th>Quantity</th>
+                                        <th>Date sold</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $restaurent_sel = $link->query("SELECT * FROM restaurent_products_transactions");
+                                    while ($rows = mysqli_fetch_array($restaurent_sel)) {
+                                        $count += 1;
+                                        $id = $rows['id'];
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['product_name']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['price']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['quantity']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['dates']; ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    
+          <div class="tab-pane fade" id="gymClientView">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View Gym Clients</h3>
+                        <div class="card p-3" style="width: 800px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fullname</th>
+                                        <th>Membership Type</th>
+                                        <th>Organization</th>
+                                        <th>Amount Paid</th>
+                                        <th>Date Recorded</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $cyber_sel = $link->query("SELECT * FROM gym_clients");
+                                    while ($rows = mysqli_fetch_array($cyber_sel)) {
+                                        $count += 1;
+                                        $id = $rows['id'];
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['fullname']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['membership_type']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['organization']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['amount_paid']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['dates']; ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="gymOrganizationView">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View Gym Organizations</h3>
+                        <div class="card p-3" style="width: 800px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Organization Name</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $cyber_sel = $link->query("SELECT * FROM gym_organizations");
+                                    while ($rows = mysqli_fetch_array($cyber_sel)) {
+                                        $count += 1;
+                                        $id = $rows['id'];
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['organization_name']; ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="roomClientsView">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View Room Clients</h3>
+                        <div class="card p-3" style="width: 1000px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fullname</th>
+                                        <th>Phone</th>
+                                        <th>Checkin Date</th>
+                                        <th>Checkout Date</th>
+                                        <th>Room Name</th>
+                                        <th>Amount Paid</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $room_sel = $link->query("SELECT * FROM rooms_clients");
+                                    while ($rows = mysqli_fetch_array($room_sel)) {
+                                        $count += 1;
+                                        $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$rows[room_id]'");
+                                        $room_row = mysqli_fetch_array($room_name_sel);
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['fullname']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['phone']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['checkin_date']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['checkout_date']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $room_row['room_name']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['amount_paid']; ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    
+          <div class="tab-pane fade" id="supermarketView">
+            <!-- Content for Restaurant Products tab -->
+            <h3 class="mb-4">View Supermarket Products</h3>
+            <div class="card p-3" style="width: 800px;">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Unit Price in RWF</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <?php
+                  $count = 0;
+                  $supermarket_sel = $link->query("SELECT * FROM supermarket_products");
+                  while ($rows = mysqli_fetch_array($supermarket_sel)) {
+                    $count += 1;
+                    $id = $rows['id'];
+                    ?>
+                    <tr>
+                      <td>
+                        <?php echo $count; ?>
+                      </td>
+                      <td>
+                        <?php echo $rows['product_name']; ?>
+                      </td>
+                      <td>
+                        <?php echo $rows['unit_price']; ?>
+                      </td>
+                      <td>
+                        <?php echo $rows['quantity']; ?>
+                      </td>
+                    </tr>
+                  <?php } ?>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="organization">
+            <h3 class="mb-4">Add Gym Organization</h3>
+            <div class="card p-3" style="width: 800px;">
+              <form method="POST">
+                <div class="mb-3">
+                  <label for="organizationName" class="form-label">Organization Name</label>
+                  <input type="text" class="form-control" id="organizationName" name="organizationName"
+                    required>
+                </div>
+                <button type="submit" name="addOrganization" class="btn btn-primary">Add Organization</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="cyberTransactions">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View All Cyber Transactions</h3>
+                        <div class="card p-3" style="width: 800px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product Name</th>
+                                        <th>Unit Price in RWF</th>
+                                        <th>Quantity</th>
+                                        <th>Date sold</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $restaurent_sel = $link->query("SELECT * FROM cyber_products_transactions");
+                                    while ($rows = mysqli_fetch_array($restaurent_sel)) {
+                                        $count += 1;
+                                        $id = $rows['id'];
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['product_name']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['price_per_unit']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['quantity']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['dates']; ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+          <div class="tab-pane fade" id="restaurentView">
+            <!-- Content for Restaurant Products tab -->
+            <h3 class="mb-4">View Restaurent Products</h3>
+            <div class="card p-3" style="width: 800px;">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Unit Price in RWF</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <?php
+                  $count = 0;
+                  $restaurent_sel = $link->query("SELECT * FROM restaurent_products");
+                  while ($rows = mysqli_fetch_array($restaurent_sel)) {
+                    $count += 1;
+                    $id = $rows['id'];
+                    ?>
+                    <tr>
+                      <td>
+                        <?php echo $count; ?>
+                      </td>
+                      <td>
+                        <?php echo $rows['product_name']; ?>
+                      </td>
+                      <td>
+                        <?php echo $rows['price']; ?>
+                      </td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="supermarketTransactions">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View All Supermarket Transactions</h3>
+                        <div class="card p-3" style="width: 800px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product Name</th>
+                                        <th>Unit Price in RWF</th>
+                                        <th>Quantity</th>
+                                        <th>Date sold</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $restaurent_sel = $link->query("SELECT * FROM supermarket_products_transactions");
+                                    while ($rows = mysqli_fetch_array($restaurent_sel)) {
+                                        $count += 1;
+                                        $id = $rows['id'];
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['product_name']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['price_per_unit']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['quantity']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['dates']; ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="usersView">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View All Users</h3>
+                        <div class="card p-3" style="width: 800px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fullname</th>
+                                        <th>E-mail</th>
+                                        <th>Password</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $users_sel = $link->query("SELECT * FROM users");
+                                    while ($rows = mysqli_fetch_array($users_sel)) {
+                                        $count += 1;
+                                        $id = $rows['id'];
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['fullname']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['email']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['password']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['role']; ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
                     <div class="tab-pane fade" id="roomsView">
                         <!-- Content for Restaurant Products tab -->
                         <h3 class="mb-4">View Rooms</h3>
@@ -308,7 +827,6 @@ if (isset($_POST['registerRoomClient'])) {
                                         <th>Room Name</th>
                                         <th>Room Price in RWF</th>
                                         <th>Room Status</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -333,12 +851,6 @@ if (isset($_POST['registerRoomClient'])) {
                                             <td>
                                                 <?php echo $rows['room_status']; ?>
                                             </td>
-                                            <td>
-                                                <a href="deleteRoom.php?id=<?php echo $id; ?>"
-                                                    class="btn btn-danger">Delete</a>
-                                                <a href="updateRoom.php?id=<?php echo $id; ?>"
-                                                    class="btn btn-secondary">Update</a>
-                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -346,6 +858,7 @@ if (isset($_POST['registerRoomClient'])) {
 
                         </div>
                     </div>
+                    
                     <!-- Add more tab panes as needed for additional functionality -->
                 </div>
             </main>
