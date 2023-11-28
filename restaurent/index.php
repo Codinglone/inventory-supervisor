@@ -234,6 +234,7 @@ if (isset($_POST['sellProduct'])) {
                                         <th>Unit Price in RWF</th>
                                         <th>Quantity</th>
                                         <th>Date sold</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -261,6 +262,12 @@ if (isset($_POST['sellProduct'])) {
                                             <td>
                                                 <?php echo $rows['dates']; ?>
                                             </td>
+                                            <td>
+                    <form method="POST" action="generate_receipt.php" target="_blank">
+                        <input type="hidden" name="transaction_id" value="<?php echo $id; ?>">
+                        <button type="submit" class="btn btn-primary">Print Receipt</button>
+                    </form>
+                </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
