@@ -197,14 +197,14 @@ if(isset($_POST['registerRoomClient'])){
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
-                                href="#restaurentView"><i class="fas fa-eye"></i>View Room Clients</a>
+                                href="#roomClientsView"><i class="fas fa-eye"></i>View Room Clients</a>
                         </li>
                         <!-- Add more tabs as needed -->
                     </ul>
                 </div>
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 d-flex justify-center">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-md-2 d-flex justify-center">
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="registerGymClients">
                         <!-- Content for Cyber Products tab -->
@@ -384,6 +384,62 @@ if(isset($_POST['registerRoomClient'])){
                                         </tr>
                                     <?php } ?>
 
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="roomClientsView">
+                        <!-- Content for Restaurant Products tab -->
+                        <h3 class="mb-4">View Room Clients</h3>
+                        <div class="card p-3" style="width: 1000px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fullname</th>
+                                        <th>Phone</th>
+                                        <th>Checkin Date</th>
+                                        <th>Checkout Date</th>
+                                        <th>Room Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $count = 0;
+                                    $room_sel = $link->query("SELECT * FROM rooms_clients");
+                                    while ($rows = mysqli_fetch_array($room_sel)) {
+                                        $count += 1;
+                                        $id = $rows['id'];
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $count; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['fullname']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['phone']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['checkin_date']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['checkout_date']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['room_id']; ?>
+                                            </td>
+                                           <td>
+                                           <a href="deleteRoom.php?id=<?php echo $id; ?>" class="btn btn-primary">View More</a>
+                                            <a href="updateRoom.php?id=<?php echo $id; ?>" class="btn btn-secondary">Update</a>
+                                           </td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
 

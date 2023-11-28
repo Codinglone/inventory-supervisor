@@ -99,27 +99,27 @@ if (is_null($logged_user)) {
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#registerGymClients"><i class="fas fa-dumbbell"></i>Add Gym Client</a>
+                                href="index.php"><i class="fas fa-dumbbell"></i>Add Gym Client</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#roomRegistration"><i class="fas fa-bed"></i>Register Room</a>
+                                href="index.php"><i class="fas fa-bed"></i>Register Room</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#registerRoomClients"><i class="fas fa-bed"></i>Register Room Clients</a>
+                                href="index.php"><i class="fas fa-bed"></i>Register Room Clients</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#gymView"><i
+                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="index.php"><i
                                     class="fas fa-eye"></i>View Gym Clients</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active text-white" id="cyberViewTab" data-bs-toggle="tab" href="#roomsView"><i
+                            <a class="nav-link active text-white" id="cyberViewTab" data-bs-toggle="tab" href="index.php"><i
                                     class="fas fa-eye"></i>View Rooms</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
-                                href="#restaurentView"><i class="fas fa-eye"></i>View Room Clients</a>
+                                href="index.php"><i class="fas fa-eye"></i>View Room Clients</a>
                         </li>
                         <!-- Add more tabs as needed -->
                     </ul>
