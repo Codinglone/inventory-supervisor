@@ -408,8 +408,8 @@ if(isset($_POST['registerRoomClient'])){
                                 <tbody>
                                     <?php
                                     $count = 0;
-                                    $restaurent_sel = $link->query("SELECT * FROM rooms");
-                                    while ($rows = mysqli_fetch_array($restaurent_sel)) {
+                                    $room_sel = $link->query("SELECT * FROM rooms");
+                                    while ($rows = mysqli_fetch_array($room_sel)) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
@@ -427,8 +427,8 @@ if(isset($_POST['registerRoomClient'])){
                                                 <?php echo $rows['room_status']; ?>
                                             </td>
                                            <td>
-                                           <a href="deleteRoom.php" class="btn btn-danger">Delete</a>
-                                            <a href="updateRoom.php" class="btn btn-secondary">Update</a>
+                                           <a href="deleteRoom.php?id=<?php echo $id; ?>" class="btn btn-danger">Delete</a>
+                                            <a href="updateRoom.php?id=<?php echo $id; ?>" class="btn btn-secondary">Update</a>
                                            </td>
                                         </tr>
                                     <?php } ?>
