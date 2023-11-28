@@ -29,6 +29,7 @@ if (isset($_POST['login'])) {
         $_SESSION['reception'] = $user_row['email'];
         header("location: ./reception/index.php");
     } else if ($user_row['role'] == "technician") {
+        $_SESSION['technician'] = $user_row['email'];
         header("location: ./IT/index.php");
     } else {
         echo "<script>alert('Invalid credentials! Try again...')</script>";
