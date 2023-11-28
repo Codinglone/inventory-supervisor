@@ -176,25 +176,10 @@ if (isset($_POST['registerSaunaClient'])) {
                             <a class="nav-link active text-white" id="cyberTab" data-bs-toggle="tab"
                                 href="#registerSaunaClients"><i class="fas fa-hot-tub"></i>Sauna & Massage Client</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#roomRegistration"><i class="fas fa-bed"></i>Register Room</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#registerRoomClients"><i class="fas fa-bed"></i>Register Room Clients</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#gymView"><i
-                                    class="fas fa-eye"></i>View Gym Clients</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#roomsView"><i
-                                    class="fas fa-eye"></i>View Rooms</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
-                                href="#roomClientsView"><i class="fas fa-eye"></i>View Room Clients</a>
+                                    class="fas fa-eye"></i>View All Clients</a>
                         </li>
                         <!-- Add more tabs as needed -->
                     </ul>
@@ -251,106 +236,18 @@ if (isset($_POST['registerSaunaClient'])) {
                         </div>
                     </div>
 
-                    <div class="tab-pane fade show" id="roomRegistration">
-                        <!-- Content for Cyber Products tab -->
-                        <h3 class="mb-4">Register Room</h3>
-                        <div class="card p-3" style="width: 800px;">
-                            <form method="POST">
-                                <div class="mb-3">
-                                    <label for="RoomName" class="form-label">Room Name</label>
-                                    <input type="text" class="form-control" id="RoomName" name="RoomName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="roomPrice" class="form-label">Room Price</label>
-                                    <input type="number" class="form-control" value="0" id="roomPrice" name="roomPrice"
-                                        required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="roomStatus" class="form-label">Room Status</label>
-                                    <select class="form-select" name="roomStatus" aria-label="Default select example"
-                                        id="roomStatus">
-                                        <option value="Available" selected>Available</option>
-                                        <option value="Not-Available">Not-Available</option>
-                                    </select>
-                                </div>
-
-                                <button type="submit" name="registerRoom" class="btn btn-primary">Register
-                                    Room</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade show" id="registerRoomClients">
-                        <!-- Content for Cyber Products tab -->
-                        <h3 class="mb-4">Register Room Clients</h3>
-                        <div class="card p-3" style="width: 800px;">
-                            <form method="POST">
-                                <div class="mb-3">
-                                    <label for="clientName" class="form-label">Client's Fullname</label>
-                                    <input type="text" class="form-control" id="fullName" name="fullName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Client's Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Client's Phone</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ID" class="form-label">Client's ID Number</label>
-                                    <input type="text" class="form-control" id="ID" name="ID" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="checkin_date" class="form-label">Checkin Date</label>
-                                    <input type="date" class="form-control" id="checkin_date" name="checkin_date"
-                                        required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="checkout_date" class="form-label">Checkout Date</label>
-                                    <input type="date" class="form-control" id="checkout_date" name="checkout_date"
-                                        required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="roomId" class="form-label">Choose Room</label>
-                                    <select class="form-select" name="roomId" id="roomId"
-                                        aria-label="Default select example">
-                                        <?php
-                                        $room_sel = $link->query("SELECT * FROM rooms");
-                                        while ($row = mysqli_fetch_array($room_sel)) {
-                                            ?>
-                                            <option value="<?php echo $row['id']; ?>">
-                                                <?php echo $row['room_name']; ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="amountPaid" class="form-label">Amount Paid</label>
-                                    <input type="number" class="form-control" value="0" id="amountPaid"
-                                        name="amountPaid" required>
-                                </div>
-                                <button type="submit" name="registerRoomClient" class="btn btn-primary">Register
-                                    Client</button>
-                            </form>
-                        </div>
-                    </div>
-
-
                     <div class="tab-pane fade" id="gymView">
                         <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Gym Clients</h3>
-                        <div class="card p-3" style="width: 800px;">
+                        <h3 class="mb-4">View Sauna & Massage Clients</h3>
+                        <div class="card p-3" style="width: 1000px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Fullname</th>
-                                        <th>Membership Type</th>
-                                        <th>Organization</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Service Type</th>
                                         <th>Amount Paid</th>
                                         <th>Date Recorded</th>
 
@@ -360,7 +257,7 @@ if (isset($_POST['registerSaunaClient'])) {
                                 <tbody>
                                     <?php
                                     $count = 0;
-                                    $cyber_sel = $link->query("SELECT * FROM gym_clients");
+                                    $cyber_sel = $link->query("SELECT * FROM sauna_massage_clients");
                                     while ($rows = mysqli_fetch_array($cyber_sel)) {
                                         $count += 1;
                                         $id = $rows['id'];
@@ -373,10 +270,13 @@ if (isset($_POST['registerSaunaClient'])) {
                                                 <?php echo $rows['fullname']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['membership_type']; ?>
+                                                <?php echo $rows['email']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['organization']; ?>
+                                                <?php echo $rows['phone']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['service_type']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $rows['amount_paid']; ?>
@@ -393,111 +293,6 @@ if (isset($_POST['registerSaunaClient'])) {
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="roomClientsView">
-                        <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Room Clients</h3>
-                        <div class="card p-3" style="width: 1000px;">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Fullname</th>
-                                        <th>Phone</th>
-                                        <th>Checkin Date</th>
-                                        <th>Checkout Date</th>
-                                        <th>Room Name</th>
-                                        <th>Amount Paid</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <?php
-                                    $count = 0;
-                                    $room_sel = $link->query("SELECT * FROM rooms_clients");
-                                    while ($rows = mysqli_fetch_array($room_sel)) {
-                                        $count += 1;
-                                        $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$rows[room_id]'");
-                                        $room_row = mysqli_fetch_array($room_name_sel);
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['fullname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['phone']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['checkin_date']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['checkout_date']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $room_row['room_name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['amount_paid']; ?>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="roomsView">
-                        <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Rooms</h3>
-                        <div class="card p-3" style="width: 800px;">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Room Name</th>
-                                        <th>Room Price in RWF</th>
-                                        <th>Room Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <?php
-                                    $count = 0;
-                                    $room_sel = $link->query("SELECT * FROM rooms");
-                                    while ($rows = mysqli_fetch_array($room_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['room_name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['room_price']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['room_status']; ?>
-                                            </td>
-                                            <td>
-                                                <a href="deleteRoom.php?id=<?php echo $id; ?>"
-                                                    class="btn btn-danger">Delete</a>
-                                                <a href="updateRoom.php?id=<?php echo $id; ?>"
-                                                    class="btn btn-secondary">Update</a>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
                     <!-- Add more tab panes as needed for additional functionality -->
                 </div>
             </main>
