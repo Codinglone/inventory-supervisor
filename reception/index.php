@@ -188,12 +188,12 @@ if(isset($_POST['registerRoomClient'])){
                                 href="#registerRoomClients"><i class="fas fa-bed"></i>Register Room Clients</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i
+                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#gymView"><i
                                     class="fas fa-eye"></i>View Gym Clients</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i
-                                    class="fas fa-eye"></i>View Gym Clients</a>
+                                    class="fas fa-eye"></i>View Rooms</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
@@ -337,24 +337,27 @@ if(isset($_POST['registerRoomClient'])){
                     </div>
 
 
-                    <div class="tab-pane fade" id="cyberView">
+                    <div class="tab-pane fade" id="gymView">
                         <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Remaining Products</h3>
+                        <h3 class="mb-4">View Gym Clients</h3>
                         <div class="card p-3" style="width: 800px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Product Name</th>
-                                        <th>Unit Price in RWF</th>
-                                        <th>Quantity</th>
+                                        <th>Fullname</th>
+                                        <th>Membership Type</th>
+                                        <th>Organization</th>
+                                        <th>Amount Paid</th>
+                                        <th>Date Recorded</th>
+
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <?php
                                     $count = 0;
-                                    $cyber_sel = $link->query("SELECT * FROM cyber_products");
+                                    $cyber_sel = $link->query("SELECT * FROM gym_clients");
                                     while ($rows = mysqli_fetch_array($cyber_sel)) {
                                         $count += 1;
                                         $id = $rows['id'];
@@ -364,13 +367,19 @@ if(isset($_POST['registerRoomClient'])){
                                                 <?php echo $count; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['product_name']; ?>
+                                                <?php echo $rows['fullname']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['price_per_unit']; ?>
+                                                <?php echo $rows['membership_type']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['quantity']; ?>
+                                                <?php echo $rows['organization']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['amount_paid']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $rows['dates']; ?>
                                             </td>
                                         </tr>
                                     <?php } ?>
