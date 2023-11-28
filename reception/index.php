@@ -403,7 +403,7 @@ if(isset($_POST['registerRoomClient'])){
                                         <th>Checkin Date</th>
                                         <th>Checkout Date</th>
                                         <th>Room Name</th>
-                                        <th>Action</th>
+                                        <th>Amount Paid</th>
                                     </tr>
                                 </thead>
 
@@ -413,7 +413,8 @@ if(isset($_POST['registerRoomClient'])){
                                     $room_sel = $link->query("SELECT * FROM rooms_clients");
                                     while ($rows = mysqli_fetch_array($room_sel)) {
                                         $count += 1;
-                                        $id = $rows['id'];
+                                        $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$rows[room_id]'");
+                                        $room_row = mysqli_fetch_array($room_name_sel);
                                         ?>
                                         <tr>
                                             <td>
@@ -432,12 +433,11 @@ if(isset($_POST['registerRoomClient'])){
                                                 <?php echo $rows['checkout_date']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['room_id']; ?>
+                                                <?php echo $room_row['room_name']; ?>
                                             </td>
-                                           <td>
-                                           <a href="deleteRoom.php?id=<?php echo $id; ?>" class="btn btn-primary">View More</a>
-                                            <a href="updateRoom.php?id=<?php echo $id; ?>" class="btn btn-secondary">Update</a>
-                                           </td>
+                                            <td>
+                                                <?php echo $rows['amount_paid']; ?>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
