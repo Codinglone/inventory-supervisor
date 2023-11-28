@@ -54,6 +54,35 @@ if (isset($_POST['registerRoom'])) {
     }
 }
 
+if(isset($_POST['registerRoomClient'])){
+    $client_name = trim($_POST['fullName']);
+    $client_email = trim($_POST['email']);
+    $client_phone = trim($_POST['phone']);
+    $client_ID = trim($_POST['ID']);
+    $checkin_date = trim($_POST['checkin_date']);
+    $checkout_date = trim($_POST['checkout_date']);
+    $roomId = filter_var($_POST['roomId'], FILTER_VALIDATE_INT);
+    $amount_paid = filter_var($_POST['amountPaid'], FILTER_VALIDATE_INT);
+
+    if (empty($client_name) || empty($client_email) || empty($client_phone) || empty($client_ID) || empty($checkin_date) || empty($checkout_date) || !$roomId || !$amount_paid) {
+        $error = 'Invalid client info';
+    } else {
+        // Insert with prepared statement 
+        $stmt = $link->prepare("INSERT INTO rooms_clients(fullname, email, phone, id_number, checkin_date, checkout_date, room_id, amount_paid) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssii", $client_name, $client_email, $client_phone, $client_ID, $checkin_date, $checkout_date, $roomId, $amount_paid);
+        if (!$stmt->execute()) {
+            $error = $stmt->error;
+        } else {
+            echo "<script>alert('Room Client was registered successfully!')</script>";
+        }
+    }
+
+    // Check for errors
+    if (isset($error)) {
+        echo "Error registering room client: " . $error;
+    }
+}
+
 
 
 ?>
@@ -155,6 +184,10 @@ if (isset($_POST['registerRoom'])) {
                                 href="#roomRegistration"><i class="fas fa-bed"></i>Register Room</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
+                                href="#registerRoomClients"><i class="fas fa-bed"></i>Register Room Clients</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i
                                     class="fas fa-eye"></i>View Gym Clients</a>
                         </li>
@@ -207,7 +240,7 @@ if (isset($_POST['registerRoom'])) {
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="amountPaid" class="form-label">Amount Paid</label>
+                                    <label for="amountPaid" class="form-label">Amount Paid In RWF</label>
                                     <input type="number" class="form-control" value="0" id="amountPaid"
                                         name="amountPaid" required>
                                 </div>
@@ -242,6 +275,63 @@ if (isset($_POST['registerRoom'])) {
 
                                 <button type="submit" name="registerRoom" class="btn btn-primary">Register
                                     Room</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade show" id="registerRoomClients">
+                        <!-- Content for Cyber Products tab -->
+                        <h3 class="mb-4">Register Room Clients</h3>
+                        <div class="card p-3" style="width: 800px;">
+                            <form method="POST">
+                                <div class="mb-3">
+                                    <label for="clientName" class="form-label">Client's Fullname</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Client's Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Client's Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ID" class="form-label">Client's ID Number</label>
+                                    <input type="text" class="form-control" id="ID" name="ID" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="checkin_date" class="form-label">Checkin Date</label>
+                                    <input type="date" class="form-control" id="checkin_date" name="checkin_date" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="checkout_date" class="form-label">Checkout Date</label>
+                                    <input type="date" class="form-control" id="checkout_date" name="checkout_date" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="roomId" class="form-label">Choose Room</label>
+                                    <select class="form-select" name="roomId" id="roomId"
+                                        aria-label="Default select example">
+                                        <?php
+                                        $room_sel = $link->query("SELECT * FROM rooms");
+                                        while ($row = mysqli_fetch_array($room_sel)) {
+                                            ?>
+                                            <option value="<?php echo $row['id']; ?>">
+                                                <?php echo $row['room_name']; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="amountPaid" class="form-label">Amount Paid</label>
+                                    <input type="number" class="form-control" value="0" id="amountPaid"
+                                        name="amountPaid" required>
+                                </div>
+                                <button type="submit" name="registerRoomClient" class="btn btn-primary">Register
+                                    Client</button>
                             </form>
                         </div>
                     </div>
