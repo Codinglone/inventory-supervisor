@@ -28,13 +28,32 @@ if (isset($_POST['registerClient'])) {
         }
 
     }
+}
+if (isset($_POST['registerRoom'])) {
+    $room_name = trim($_POST['RoomName']);
+    $room_price = filter_var($_POST['roomPrice'], FILTER_VALIDATE_INT);
+    $room_status = trim($_POST['roomStatus']);
+
+    if (empty($room_name) || !$room_price || empty($room_status)) {
+        $error = 'Invalid product data';
+    } else {
+        // Insert with prepared statement 
+        $stmt = $link->prepare("INSERT INTO rooms(room_name, room_price, room_status) VALUES(?, ?, ?)");
+        $date = date("Y-m-d");
+        $stmt->bind_param("sis", $room_name, $room_price, $room_status);
+        if (!$stmt->execute()) {
+            $error = $stmt->error;
+        } else {
+            echo "<script>alert('Room was registered successfully!')</script>";
+        }
+    }
 
     // Check for errors
     if (isset($error)) {
-        echo "Error selling product: " . $error;
+        echo "Error registering room: " . $error;
     }
-
 }
+
 
 
 ?>
@@ -129,11 +148,11 @@ if (isset($_POST['registerClient'])) {
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#cyberProducts"><i class="fas fa-dumbbell"></i>Add Gym Client</a>
+                                href="#registerGymClients"><i class="fas fa-dumbbell"></i>Add Gym Client</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab" href="#cyberProducts"><i
-                                    class="fas fa-bed"></i>Register Room</a>
+                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
+                                href="#roomRegistration"><i class="fas fa-bed"></i>Register Room</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i
@@ -154,7 +173,7 @@ if (isset($_POST['registerClient'])) {
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 d-flex justify-center">
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="cyberProducts">
+                    <div class="tab-pane fade show active" id="registerGymClients">
                         <!-- Content for Cyber Products tab -->
                         <h3 class="mb-4">Register Gym Client</h3>
                         <div class="card p-3" style="width: 800px;">
@@ -194,6 +213,35 @@ if (isset($_POST['registerClient'])) {
                                 </div>
                                 <button type="submit" name="registerClient" class="btn btn-primary">Register
                                     Client</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade show" id="roomRegistration">
+                        <!-- Content for Cyber Products tab -->
+                        <h3 class="mb-4">Register Room</h3>
+                        <div class="card p-3" style="width: 800px;">
+                            <form method="POST">
+                                <div class="mb-3">
+                                    <label for="RoomName" class="form-label">Room Name</label>
+                                    <input type="text" class="form-control" id="RoomName" name="RoomName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="roomPrice" class="form-label">Room Price</label>
+                                    <input type="number" class="form-control" value="0" id="roomPrice" name="roomPrice"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="roomStatus" class="form-label">Room Status</label>
+                                    <select class="form-select" name="roomStatus" aria-label="Default select example"
+                                        id="roomStatus">
+                                        <option value="Available" selected>Available</option>
+                                        <option value="Not-Available">Not-Available</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" name="registerRoom" class="btn btn-primary">Register
+                                    Room</button>
                             </form>
                         </div>
                     </div>
