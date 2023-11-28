@@ -175,21 +175,10 @@ if (isset($_POST['registerRoomClient'])) {
                 style="position: fixed; left:0;height:100vh;overflow:hidden;margin-top:14px;">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
+
                         <li class="nav-item">
-                            <a class="nav-link active text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#registerGymClients"><i class="fas fa-dumbbell"></i>Add Gym Client</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#roomRegistration"><i class="fas fa-bed"></i>Register Room</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberTab" data-bs-toggle="tab"
-                                href="#registerRoomClients"><i class="fas fa-bed"></i>Register Room Clients</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#gymView"><i
-                                    class="fas fa-eye"></i>View Gym Clients</a>
+                            <a class="nav-link active text-white" id="cyberViewTab" data-bs-toggle="tab"
+                                href="#gymView"><i class="fas fa-chart-bar"></i>Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#roomsView"><i
@@ -206,245 +195,105 @@ if (isset($_POST['registerRoomClient'])) {
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-md-2 d-flex justify-center">
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="registerGymClients">
-                        <!-- Content for Cyber Products tab -->
-                        <h3 class="mb-4">Register Gym Client</h3>
-                        <div class="card p-3" style="width: 800px;">
-                            <form method="POST">
-                                <div class="mb-3">
-                                    <label for="clientName" class="form-label">Client Name</label>
-                                    <input type="text" class="form-control" id="clientName" name="clientName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="productNameCyber" class="form-label">Membership Type</label>
-                                    <select class="form-select" name="membershipType"
-                                        aria-label="Default select example" required>
-                                        <option value="Daily" selected>Daily</option>
-                                        <option value="Monthly">Monthly</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="productNameCyber" class="form-label">Organization</label>
-                                    <select class="form-select" name="organizationName"
-                                        aria-label="Default select example">
-                                        <option value="Personal" selected>Personal</option>
-                                        <?php
-                                        $organization_sel = $link->query("SELECT * FROM gym_organizations");
-                                        while ($row = mysqli_fetch_array($organization_sel)) {
-                                            ?>
-                                            <option value="<?php echo $row['organization_name']; ?>">
-                                                <?php echo $row['organization_name']; ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
 
-                                </div>
-                                <div class="mb-3">
-                                    <label for="amountPaid" class="form-label">Amount Paid In RWF</label>
-                                    <input type="number" class="form-control" value="0" id="amountPaid"
-                                        name="amountPaid" required>
-                                </div>
-                                <button type="submit" name="registerClient" class="btn btn-primary">Register
-                                    Client</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade show" id="roomRegistration">
-                        <!-- Content for Cyber Products tab -->
-                        <h3 class="mb-4">Register Room</h3>
-                        <div class="card p-3" style="width: 800px;">
-                            <form method="POST">
-                                <div class="mb-3">
-                                    <label for="RoomName" class="form-label">Room Name</label>
-                                    <input type="text" class="form-control" id="RoomName" name="RoomName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="roomPrice" class="form-label">Room Price</label>
-                                    <input type="number" class="form-control" value="0" id="roomPrice" name="roomPrice"
-                                        required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="roomStatus" class="form-label">Room Status</label>
-                                    <select class="form-select" name="roomStatus" aria-label="Default select example"
-                                        id="roomStatus">
-                                        <option value="Available" selected>Available</option>
-                                        <option value="Not-Available">Not-Available</option>
-                                    </select>
-                                </div>
-
-                                <button type="submit" name="registerRoom" class="btn btn-primary">Register
-                                    Room</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade show" id="registerRoomClients">
-                        <!-- Content for Cyber Products tab -->
-                        <h3 class="mb-4">Register Room Clients</h3>
-                        <div class="card p-3" style="width: 800px;">
-                            <form method="POST">
-                                <div class="mb-3">
-                                    <label for="clientName" class="form-label">Client's Fullname</label>
-                                    <input type="text" class="form-control" id="fullName" name="fullName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Client's Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Client's Phone</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ID" class="form-label">Client's ID Number</label>
-                                    <input type="text" class="form-control" id="ID" name="ID" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="checkin_date" class="form-label">Checkin Date</label>
-                                    <input type="date" class="form-control" id="checkin_date" name="checkin_date"
-                                        required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="checkout_date" class="form-label">Checkout Date</label>
-                                    <input type="date" class="form-control" id="checkout_date" name="checkout_date"
-                                        required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="roomId" class="form-label">Choose Room</label>
-                                    <select class="form-select" name="roomId" id="roomId"
-                                        aria-label="Default select example">
-                                        <?php
-                                        $room_sel = $link->query("SELECT * FROM rooms");
-                                        while ($row = mysqli_fetch_array($room_sel)) {
-                                            ?>
-                                            <option value="<?php echo $row['id']; ?>">
-                                                <?php echo $row['room_name']; ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="amountPaid" class="form-label">Amount Paid</label>
-                                    <input type="number" class="form-control" value="0" id="amountPaid"
-                                        name="amountPaid" required>
-                                </div>
-                                <button type="submit" name="registerRoomClient" class="btn btn-primary">Register
-                                    Client</button>
-                            </form>
-                        </div>
-                    </div>
-
-
-                    <div class="tab-pane fade" id="gymView">
+                    <div class="tab-pane active show" id="gymView">
                         <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Gym Clients</h3>
-                        <div class="card p-3" style="width: 800px;">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Fullname</th>
-                                        <th>Membership Type</th>
-                                        <th>Organization</th>
-                                        <th>Amount Paid</th>
-                                        <th>Date Recorded</th>
-
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <?php
-                                    $count = 0;
-                                    $cyber_sel = $link->query("SELECT * FROM gym_clients");
-                                    while ($rows = mysqli_fetch_array($cyber_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['fullname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['membership_type']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['organization']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['amount_paid']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['dates']; ?>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-
-                                </tbody>
-                            </table>
-
+                        <h3 class="mb-4">Dashboard</h3>
+                        <div class="p-3 d-flex justify-content-between" style="width: 1000px;">
+                            <div class="bg-primary py-2"
+                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+                                <span class="h4 text-white text-center">All Registered Clients</span>
+                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">100</span>
+                            </div>
+                            <div class="bg-success py-2"
+                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+                                <span class="h4 text-white text-center">All Registered Gym Clients</span>
+                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+                                <?php 
+                                $query = "SELECT COUNT(*) as total_records FROM gym_clients";
+                                $client_sel = $link->query($query);
+                                $client_row = mysqli_fetch_array($client_sel);
+                                ?>
+                                <?php echo $client_row['total_records'];  ?>
+                                </span>
+                            </div>
+                            <div class="py-2"
+                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;background-color: teal;">
+                                <span class="h4 text-white text-center">All Registered Room Clients</span>
+                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+                                <?php 
+                                $query = "SELECT COUNT(*) as total_records FROM rooms_clients";
+                                $client_sel = $link->query($query);
+                                $client_row = mysqli_fetch_array($client_sel);
+                                ?>
+                                <?php echo $client_row['total_records'];  ?>
+                                </span>
+                            </div>
+                            <div class="bg-secondary py-2"
+                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+                                <span class="h4 text-white text-center">All Registered Sauna Clients</span>
+                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+                                <?php 
+                                $query = "SELECT COUNT(*) as total_records FROM sauna_massage_clients";
+                                $client_sel = $link->query($query);
+                                $client_row = mysqli_fetch_array($client_sel);
+                                ?>
+                                <?php echo $client_row['total_records'];  ?>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="roomClientsView">
-                        <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Room Clients</h3>
-                        <div class="card p-3" style="width: 1000px;">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Fullname</th>
-                                        <th>Phone</th>
-                                        <th>Checkin Date</th>
-                                        <th>Checkout Date</th>
-                                        <th>Room Name</th>
-                                        <th>Amount Paid</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <?php
-                                    $count = 0;
-                                    $room_sel = $link->query("SELECT * FROM rooms_clients");
-                                    while ($rows = mysqli_fetch_array($room_sel)) {
-                                        $count += 1;
-                                        $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$rows[room_id]'");
-                                        $room_row = mysqli_fetch_array($room_name_sel);
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['fullname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['phone']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['checkin_date']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['checkout_date']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $room_row['room_name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['amount_paid']; ?>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-
+                        <div class="p-3 d-flex justify-content-between" style="width: 1000px;">
+                        <div class="bg-success py-2"
+                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+                                <span class="h4 text-white text-center">All Restaurent Products</span>
+                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+                                <?php 
+                                $query = "SELECT COUNT(*) as total_records FROM restaurent_products";
+                                $client_sel = $link->query($query);
+                                $client_row = mysqli_fetch_array($client_sel);
+                                ?>
+                                <?php echo $client_row['total_records'];  ?>
+                                </span>
+                            </div>
+                            <div class="bg-secondary py-2"
+                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+                                <span class="h4 text-white text-center">All Supermarket Products</span>
+                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+                                <?php 
+                                $query = "SELECT COUNT(*) as total_records FROM supermarket_products";
+                                $client_sel = $link->query($query);
+                                $client_row = mysqli_fetch_array($client_sel);
+                                ?>
+                                <?php echo $client_row['total_records'];  ?>
+                                </span>
+                            </div>
+                            <div class="bg-primary py-2"
+                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+                                <span class="h4 text-white text-center">All Registered Rooms</span>
+                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+                                <?php 
+                                $query = "SELECT COUNT(*) as total_records FROM rooms";
+                                $client_sel = $link->query($query);
+                                $client_row = mysqli_fetch_array($client_sel);
+                                ?>
+                                <?php echo $client_row['total_records'];  ?>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class="py-2"
+                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;background-color: teal;">
+                                <span class="h4 text-white text-center">All Gym Organizations</span>
+                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+                                <?php 
+                                $query = "SELECT COUNT(*) as total_records FROM gym_organizations";
+                                $client_sel = $link->query($query);
+                                $client_row = mysqli_fetch_array($client_sel);
+                                ?>
+                                <?php echo $client_row['total_records'];  ?>
+                                </span>
+                            </div>
+                            
                         </div>
                     </div>
 
