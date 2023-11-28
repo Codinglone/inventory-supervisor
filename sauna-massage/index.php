@@ -257,8 +257,8 @@ if (isset($_POST['registerSaunaClient'])) {
                                 <tbody>
                                     <?php
                                     $count = 0;
-                                    $cyber_sel = $link->query("SELECT * FROM sauna_massage_clients");
-                                    while ($rows = mysqli_fetch_array($cyber_sel)) {
+                                    $sauna_sel = $link->query("SELECT * FROM sauna_massage_clients");
+                                    while ($rows = mysqli_fetch_array($sauna_sel)) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
