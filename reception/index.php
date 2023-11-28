@@ -192,12 +192,12 @@ if(isset($_POST['registerRoomClient'])){
                                     class="fas fa-eye"></i>View Gym Clients</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#cyberView"><i
+                            <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#roomsView"><i
                                     class="fas fa-eye"></i>View Rooms</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="restaurentViewTab" data-bs-toggle="tab"
-                                href="#restaurentView"><i class="fas fa-eye"></i>View Sold Products</a>
+                                href="#restaurentView"><i class="fas fa-eye"></i>View Room Clients</a>
                         </li>
                         <!-- Add more tabs as needed -->
                     </ul>
@@ -390,25 +390,25 @@ if(isset($_POST['registerRoomClient'])){
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="restaurentView">
+                    <div class="tab-pane fade" id="roomsView">
                         <!-- Content for Restaurant Products tab -->
-                        <h3 class="mb-4">View Sold Products</h3>
+                        <h3 class="mb-4">View Rooms</h3>
                         <div class="card p-3" style="width: 800px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Product Name</th>
-                                        <th>Unit Price in RWF</th>
-                                        <th>Quantity</th>
-                                        <th>Date sold</th>
+                                        <th>Room Name</th>
+                                        <th>Room Price in RWF</th>
+                                        <th>Room Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <?php
                                     $count = 0;
-                                    $restaurent_sel = $link->query("SELECT * FROM cyber_products_transactions");
+                                    $restaurent_sel = $link->query("SELECT * FROM rooms");
                                     while ($rows = mysqli_fetch_array($restaurent_sel)) {
                                         $count += 1;
                                         $id = $rows['id'];
@@ -418,17 +418,18 @@ if(isset($_POST['registerRoomClient'])){
                                                 <?php echo $count; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['product_name']; ?>
+                                                <?php echo $rows['room_name']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['price_per_unit']; ?>
+                                                <?php echo $rows['room_price']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['quantity']; ?>
+                                                <?php echo $rows['room_status']; ?>
                                             </td>
-                                            <td>
-                                                <?php echo $rows['dates']; ?>
-                                            </td>
+                                           <td>
+                                           <a href="deleteRoom.php" class="btn btn-danger">Delete</a>
+                                            <a href="updateRoom.php" class="btn btn-secondary">Update</a>
+                                           </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
