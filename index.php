@@ -11,6 +11,7 @@ if (isset($_POST['login'])) {
         $_SESSION['accountant'] = $user_row['email'];
         header("location: ./accountant/index.php");
     } else if ($user_row['role'] == "manager") {
+        $_SESSION['manager'] = $user_row['email'];
         header("location: ./manager/index.php");
     } else if ($user_row['role'] == "cyber") {
         $_SESSION['cyber'] = $user_row['email'];
@@ -19,6 +20,7 @@ if (isset($_POST['login'])) {
         $_SESSION['supermarket'] = $user_row['email'];
         header("location: ./supermarket/index.php");
     } else if ($user_row['role'] == "sauna-massage") {
+        $_SESSION['sauna-massage'] = $user_row['email'];
         header("location: ./sauna-massage/index.php");
     } else if ($user_row['role'] == "restaurent") {
         $_SESSION['restaurent'] = $user_row['email'];
