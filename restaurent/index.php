@@ -25,10 +25,10 @@ if (isset($_POST['sellProduct'])) {
         $date = date("Y-m-d");
         $stmt->bind_param("sids", $restaurent_product_name, $restaurent_quantity, $row['price'], $date);
 
-            if (!$stmt->execute()) {
-                $error = $stmt->error;
-            } else {
-                echo "<script>alert('Product sold successfully!')</script>";
+        if (!$stmt->execute()) {
+            $error = $stmt->error;
+        } else {
+            echo "<script>alert('Product sold successfully!')</script>";
         }
     }
 
@@ -172,8 +172,8 @@ if (isset($_POST['sellProduct'])) {
                                 </div>
                                 <div class="mb-3">
                                     <label for="quantityRestaurent" class="form-label">Quantity</label>
-                                    <input type="number" class="form-control" id="quantityRestaurent" name="quantityRestaurent"
-                                        required>
+                                    <input type="number" class="form-control" id="quantityRestaurent"
+                                        name="quantityRestaurent" required>
                                 </div>
                                 <button type="submit" name="sellProduct" class="btn btn-primary">Sell
                                     Product</button>

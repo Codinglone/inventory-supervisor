@@ -54,7 +54,7 @@ if (isset($_POST['registerRoom'])) {
     }
 }
 
-if(isset($_POST['registerRoomClient'])){
+if (isset($_POST['registerRoomClient'])) {
     $client_name = trim($_POST['fullName']);
     $client_email = trim($_POST['email']);
     $client_phone = trim($_POST['phone']);
@@ -302,11 +302,13 @@ if(isset($_POST['registerRoomClient'])){
                                 </div>
                                 <div class="mb-3">
                                     <label for="checkin_date" class="form-label">Checkin Date</label>
-                                    <input type="date" class="form-control" id="checkin_date" name="checkin_date" required>
+                                    <input type="date" class="form-control" id="checkin_date" name="checkin_date"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="checkout_date" class="form-label">Checkout Date</label>
-                                    <input type="date" class="form-control" id="checkout_date" name="checkout_date" required>
+                                    <input type="date" class="form-control" id="checkout_date" name="checkout_date"
+                                        required>
                                 </div>
 
                                 <div class="mb-3">
@@ -324,7 +326,7 @@ if(isset($_POST['registerRoomClient'])){
                                     </select>
 
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="amountPaid" class="form-label">Amount Paid</label>
                                     <input type="number" class="form-control" value="0" id="amountPaid"
@@ -482,10 +484,12 @@ if(isset($_POST['registerRoomClient'])){
                                             <td>
                                                 <?php echo $rows['room_status']; ?>
                                             </td>
-                                           <td>
-                                           <a href="deleteRoom.php?id=<?php echo $id; ?>" class="btn btn-danger">Delete</a>
-                                            <a href="updateRoom.php?id=<?php echo $id; ?>" class="btn btn-secondary">Update</a>
-                                           </td>
+                                            <td>
+                                                <a href="deleteRoom.php?id=<?php echo $id; ?>"
+                                                    class="btn btn-danger">Delete</a>
+                                                <a href="updateRoom.php?id=<?php echo $id; ?>"
+                                                    class="btn btn-secondary">Update</a>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

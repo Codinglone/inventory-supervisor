@@ -176,7 +176,7 @@ if (isset($_POST['registerSaunaClient'])) {
                             <a class="nav-link active text-white" id="cyberTab" data-bs-toggle="tab"
                                 href="#registerSaunaClients"><i class="fas fa-hot-tub"></i>Sauna & Massage Client</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#gymView"><i
                                     class="fas fa-eye"></i>View All Clients</a>

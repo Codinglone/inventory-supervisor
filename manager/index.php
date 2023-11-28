@@ -3,28 +3,28 @@ session_start();
 include '../utils/link.php';
 $logged_user = $_SESSION['manager'];
 if (is_null($logged_user)) {
-    header("location: ../index.php");
+  header("location: ../index.php");
 }
 
 if (isset($_POST['addOrganization'])) {
 
-    // Validate inputs
-    $organization_name = trim($_POST['organizationName']);
+  // Validate inputs
+  $organization_name = trim($_POST['organizationName']);
 
-    if (empty($organization_name)) {
-        $error = 'Invalid organization name';
+  if (empty($organization_name)) {
+    $error = 'Invalid organization name';
+  } else {
+    // Insert with prepared statement 
+    $stmt = $link->prepare("INSERT INTO gym_organizations(organization_name, date_registered) VALUES(?, NOW())");
+    $date = date("Y-m-d");
+    $stmt->bind_param("s", $organization_name);
+    if (!$stmt->execute()) {
+      $error = $stmt->error;
     } else {
-        // Insert with prepared statement 
-        $stmt = $link->prepare("INSERT INTO gym_organizations(organization_name, date_registered) VALUES(?, NOW())");
-        $date = date("Y-m-d");
-        $stmt->bind_param("s", $organization_name);
-        if (!$stmt->execute()) {
-            $error = $stmt->error;
-        } else {
-            echo "<script>alert('Organization was registered!')</script>";
-        }
-
+      echo "<script>alert('Organization was registered!')</script>";
     }
+
+  }
 }
 
 
@@ -198,36 +198,36 @@ if (isset($_POST['addOrganization'])) {
                                 style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
                                 <span class="h4 text-white text-center">All Registered Gym Clients</span>
                                 <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php 
+                                <?php
                                 $query = "SELECT COUNT(*) as total_records FROM gym_clients";
                                 $client_sel = $link->query($query);
                                 $client_row = mysqli_fetch_array($client_sel);
                                 ?>
-                                <?php echo $client_row['total_records'];  ?>
+                                <?php echo $client_row['total_records']; ?>
                                 </span>
                             </div>
                             <div class="py-2"
                                 style="width:22%;display: flex;flex-direction:column;border-radius: 6px;background-color: teal;">
                                 <span class="h4 text-white text-center">All Registered Room Clients</span>
                                 <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php 
+                                <?php
                                 $query = "SELECT COUNT(*) as total_records FROM rooms_clients";
                                 $client_sel = $link->query($query);
                                 $client_row = mysqli_fetch_array($client_sel);
                                 ?>
-                                <?php echo $client_row['total_records'];  ?>
+                                <?php echo $client_row['total_records']; ?>
                                 </span>
                             </div>
                             <div class="bg-secondary py-2"
                                 style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
                                 <span class="h4 text-white text-center">All Registered Sauna Clients</span>
                                 <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php 
+                                <?php
                                 $query = "SELECT COUNT(*) as total_records FROM sauna_massage_clients";
                                 $client_sel = $link->query($query);
                                 $client_row = mysqli_fetch_array($client_sel);
                                 ?>
-                                <?php echo $client_row['total_records'];  ?>
+                                <?php echo $client_row['total_records']; ?>
                                 </span>
                             </div>
                         </div>
@@ -236,36 +236,36 @@ if (isset($_POST['addOrganization'])) {
                                 style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
                                 <span class="h4 text-white text-center">All Restaurent Products</span>
                                 <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php 
+                                <?php
                                 $query = "SELECT COUNT(*) as total_records FROM restaurent_products";
                                 $client_sel = $link->query($query);
                                 $client_row = mysqli_fetch_array($client_sel);
                                 ?>
-                                <?php echo $client_row['total_records'];  ?>
+                                <?php echo $client_row['total_records']; ?>
                                 </span>
                             </div>
                             <div class="bg-secondary py-2"
                                 style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
                                 <span class="h4 text-white text-center">All Supermarket Products</span>
                                 <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php 
+                                <?php
                                 $query = "SELECT COUNT(*) as total_records FROM supermarket_products";
                                 $client_sel = $link->query($query);
                                 $client_row = mysqli_fetch_array($client_sel);
                                 ?>
-                                <?php echo $client_row['total_records'];  ?>
+                                <?php echo $client_row['total_records']; ?>
                                 </span>
                             </div>
                             <div class="bg-primary py-2"
                                 style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
                                 <span class="h4 text-white text-center">All Registered Rooms</span>
                                 <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php 
+                                <?php
                                 $query = "SELECT COUNT(*) as total_records FROM rooms";
                                 $client_sel = $link->query($query);
                                 $client_row = mysqli_fetch_array($client_sel);
                                 ?>
-                                <?php echo $client_row['total_records'];  ?>
+                                <?php echo $client_row['total_records']; ?>
                                 </span>
                             </div>
                             
@@ -274,12 +274,12 @@ if (isset($_POST['addOrganization'])) {
                                 style="width:22%;display: flex;flex-direction:column;border-radius: 6px;background-color: teal;">
                                 <span class="h4 text-white text-center">All Gym Organizations</span>
                                 <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php 
+                                <?php
                                 $query = "SELECT COUNT(*) as total_records FROM gym_organizations";
                                 $client_sel = $link->query($query);
                                 $client_row = mysqli_fetch_array($client_sel);
                                 ?>
-                                <?php echo $client_row['total_records'];  ?>
+                                <?php echo $client_row['total_records']; ?>
                                 </span>
                             </div>
                             
@@ -309,32 +309,32 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $sauna_sel = $link->query("SELECT * FROM sauna_massage_clients");
                                     while ($rows = mysqli_fetch_array($sauna_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['fullname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['email']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['phone']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['service_type']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['amount_paid']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['dates']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $id = $rows['id'];
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['fullname']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['email']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['phone']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['service_type']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['amount_paid']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['dates']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
 
                                 </tbody>
@@ -365,20 +365,20 @@ if (isset($_POST['addOrganization'])) {
                     $count += 1;
                     $id = $rows['id'];
                     ?>
-                    <tr>
-                      <td>
-                        <?php echo $count; ?>
-                      </td>
-                      <td>
-                        <?php echo $rows['product_name']; ?>
-                      </td>
-                      <td>
-                        <?php echo $rows['price_per_unit']; ?>
-                      </td>
-                      <td>
-                        <?php echo $rows['quantity']; ?>
-                      </td>
-                    </tr>
+                        <tr>
+                          <td>
+                            <?php echo $count; ?>
+                          </td>
+                          <td>
+                            <?php echo $rows['product_name']; ?>
+                          </td>
+                          <td>
+                            <?php echo $rows['price_per_unit']; ?>
+                          </td>
+                          <td>
+                            <?php echo $rows['quantity']; ?>
+                          </td>
+                        </tr>
                   <?php } ?>
 
                 </tbody>
@@ -407,26 +407,26 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $restaurent_sel = $link->query("SELECT * FROM restaurent_products_transactions");
                                     while ($rows = mysqli_fetch_array($restaurent_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['product_name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['price']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['quantity']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['dates']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $id = $rows['id'];
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['product_name']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['price']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['quantity']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['dates']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -456,29 +456,29 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $cyber_sel = $link->query("SELECT * FROM gym_clients");
                                     while ($rows = mysqli_fetch_array($cyber_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['fullname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['membership_type']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['organization']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['amount_paid']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['dates']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $id = $rows['id'];
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['fullname']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['membership_type']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['organization']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['amount_paid']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['dates']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
 
                                 </tbody>
@@ -504,17 +504,17 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $cyber_sel = $link->query("SELECT * FROM gym_organizations");
                                     while ($rows = mysqli_fetch_array($cyber_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['organization_name']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $id = $rows['id'];
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['organization_name']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
 
                                 </tbody>
@@ -545,33 +545,33 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $room_sel = $link->query("SELECT * FROM rooms_clients");
                                     while ($rows = mysqli_fetch_array($room_sel)) {
-                                        $count += 1;
-                                        $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$rows[room_id]'");
-                                        $room_row = mysqli_fetch_array($room_name_sel);
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['fullname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['phone']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['checkin_date']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['checkout_date']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $room_row['room_name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['amount_paid']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$rows[room_id]'");
+                                      $room_row = mysqli_fetch_array($room_name_sel);
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['fullname']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['phone']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['checkin_date']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['checkout_date']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $room_row['room_name']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['amount_paid']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -601,20 +601,20 @@ if (isset($_POST['addOrganization'])) {
                     $count += 1;
                     $id = $rows['id'];
                     ?>
-                    <tr>
-                      <td>
-                        <?php echo $count; ?>
-                      </td>
-                      <td>
-                        <?php echo $rows['product_name']; ?>
-                      </td>
-                      <td>
-                        <?php echo $rows['unit_price']; ?>
-                      </td>
-                      <td>
-                        <?php echo $rows['quantity']; ?>
-                      </td>
-                    </tr>
+                        <tr>
+                          <td>
+                            <?php echo $count; ?>
+                          </td>
+                          <td>
+                            <?php echo $rows['product_name']; ?>
+                          </td>
+                          <td>
+                            <?php echo $rows['unit_price']; ?>
+                          </td>
+                          <td>
+                            <?php echo $rows['quantity']; ?>
+                          </td>
+                        </tr>
                   <?php } ?>
 
                 </tbody>
@@ -656,26 +656,26 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $restaurent_sel = $link->query("SELECT * FROM cyber_products_transactions");
                                     while ($rows = mysqli_fetch_array($restaurent_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['product_name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['price_per_unit']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['quantity']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['dates']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $id = $rows['id'];
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['product_name']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['price_per_unit']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['quantity']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['dates']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -704,17 +704,17 @@ if (isset($_POST['addOrganization'])) {
                     $count += 1;
                     $id = $rows['id'];
                     ?>
-                    <tr>
-                      <td>
-                        <?php echo $count; ?>
-                      </td>
-                      <td>
-                        <?php echo $rows['product_name']; ?>
-                      </td>
-                      <td>
-                        <?php echo $rows['price']; ?>
-                      </td>
-                    </tr>
+                        <tr>
+                          <td>
+                            <?php echo $count; ?>
+                          </td>
+                          <td>
+                            <?php echo $rows['product_name']; ?>
+                          </td>
+                          <td>
+                            <?php echo $rows['price']; ?>
+                          </td>
+                        </tr>
                   <?php } ?>
                 </tbody>
               </table>
@@ -742,26 +742,26 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $restaurent_sel = $link->query("SELECT * FROM supermarket_products_transactions");
                                     while ($rows = mysqli_fetch_array($restaurent_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['product_name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['price_per_unit']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['quantity']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['dates']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $id = $rows['id'];
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['product_name']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['price_per_unit']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['quantity']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['dates']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -789,26 +789,26 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $users_sel = $link->query("SELECT * FROM users");
                                     while ($rows = mysqli_fetch_array($users_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['fullname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['email']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['password']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['role']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $id = $rows['id'];
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['fullname']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['email']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['password']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['role']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -835,23 +835,23 @@ if (isset($_POST['addOrganization'])) {
                                     $count = 0;
                                     $room_sel = $link->query("SELECT * FROM rooms");
                                     while ($rows = mysqli_fetch_array($room_sel)) {
-                                        $count += 1;
-                                        $id = $rows['id'];
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['room_name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['room_price']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $rows['room_status']; ?>
-                                            </td>
-                                        </tr>
+                                      $count += 1;
+                                      $id = $rows['id'];
+                                      ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $count; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['room_name']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['room_price']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $rows['room_status']; ?>
+                                                </td>
+                                            </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
