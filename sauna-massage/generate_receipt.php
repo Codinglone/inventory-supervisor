@@ -37,7 +37,7 @@ if ($transactionId) {
                 <p><strong>Client Phone:</strong> {$transactionData['phone']}</p>
                 <p><strong>Client E-mail:</strong> {$transactionData['email']}</p>
                 <p><strong>Service Type:</strong> {$transactionData['service_type']}</p>
-                <p><strong>Membership Type:</strong> {$transactionData['membership_type']}</p>
+                <p><strong>Organization:</strong> {$transactionData['membership_type']}</p>
                 <br>
                 <br>
                 <p><strong>Total Amount:</strong> {$transactionData['amount_paid']} FRW</p>

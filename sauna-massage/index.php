@@ -227,11 +227,17 @@ if (isset($_POST['registerSaunaClient'])) {
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="membershipType" class="form-label">Membership Type</label>
+                                    <label for="membershipType" class="form-label">Subscription Type</label>
                                     <select class="form-select" id="membershipType" name="membershipType"
                                         aria-label="Default select example" required>
-                                        <option value="Daily" selected>Daily</option>
-                                        <option value="Monthly">Monthly</option>
+                                        <option value="Daily" selected>Personal - Daily</option>
+                                        <?php
+                                        $subsel = $link->query("SELECT * FROM sauna_massage_organizations");
+                                        while($gym_row = mysqli_fetch_array($subsel)){
+                                        $organization = $gym_row['organization_name'];
+                                        ?>
+                                        <option value="<?php echo $organization; ?>"><?php echo $organization; ?> - Monthly</option>
+                                        <?php } ?>
                                     </select>
                                 </div>
 
