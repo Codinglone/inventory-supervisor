@@ -52,4 +52,5 @@ $link->query($insertQuery);
 
 // Close the database connection
 mysqli_close($link);
+echo "<script>window.location.replace('index.php')</script>";
 ?>
