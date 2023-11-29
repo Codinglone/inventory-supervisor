@@ -27,6 +27,26 @@ if (isset($_POST['addOrganization'])) {
     }
 }
 
+if(isset($_POST['addSaunaOrganization'])){
+    // Validate inputs
+    $organization_name = trim($_POST['saunaOrganizationName']);
+
+    if (empty($organization_name)) {
+        $error = 'Invalid organization name';
+    } else {
+        // Insert with prepared statement 
+        $stmt = $link->prepare("INSERT INTO sauna_massage_organizations(organization_name, date_registered) VALUES(?, ?)");
+        $date = date("Y-m-d");
+        $stmt->bind_param("ss", $organization_name, $date);
+        if (!$stmt->execute()) {
+            $error = $stmt->error;
+        } else {
+            echo "<script>alert('Organization was registered!')</script>";
+        }
+
+    }
+}
+
 
 
 
@@ -127,7 +147,11 @@ if (isset($_POST['addOrganization'])) {
                         </li>
                         <li class="nav-item">
               <a class="nav-link text-white" id="restaurantTab" data-bs-toggle="tab" href="#organization"><i
-                  class="fas fa-building"></i> Add Gym Organization</a>
+                  class="fas fa-building"></i> Add Gym Subscription</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" id="restaurantTab" data-bs-toggle="tab" href="#sauna"><i
+                  class="fas fa-hot-tub"></i> Add Sauna Subscription</a>
             </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" id="cyberViewTab" data-bs-toggle="tab" href="#roomsView"><i
@@ -757,6 +781,20 @@ if (isset($_POST['addOrganization'])) {
                     required>
                 </div>
                 <button type="submit" name="addOrganization" class="btn btn-primary">Add Organization</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="sauna">
+            <h3 class="mb-4">Add Sauna & Massage Organization</h3>
+            <div class="card p-3" style="width: 800px;">
+              <form method="POST">
+                <div class="mb-3">
+                  <label for="saunaOrganizationName" class="form-label">Organization Name</label>
+                  <input type="text" class="form-control" id="saunaOrganizationName" name="saunaOrganizationName"
+                    required>
+                </div>
+                <button type="submit" name="addSaunaOrganization" class="btn btn-primary">Add Organization</button>
               </form>
             </div>
           </div>
