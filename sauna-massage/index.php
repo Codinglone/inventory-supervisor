@@ -59,14 +59,16 @@ if (isset($_POST['registerSaunaClient'])) {
     $client_email = trim($_POST['email']);
     $client_phone = trim($_POST['phone']);
     $service_type = trim($_POST['serviceType']);
+    $membership_type = trim($_POST['membershipType']);
     $amount_paid = filter_var($_POST['amountPaid'], FILTER_VALIDATE_INT);
-
-    if (empty($client_name) || empty($client_email) || empty($client_phone) || empty($service_type) || !$amount_paid) {
+    
+    if (empty($client_name) || empty($client_email) || empty($client_phone) || empty($service_type) || empty($membership_type) || !$amount_paid) {
         $error = 'Invalid client info';
     } else {
+        $currentDate = date('Y-m-d');
         // Insert with prepared statement 
-        $stmt = $link->prepare("INSERT INTO sauna_massage_clients(fullname, email, phone, service_type, amount_paid, dates) VALUES(?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("ssssi", $client_name, $client_email, $client_phone, $service_type, $amount_paid);
+        $stmt = $link->prepare("INSERT INTO sauna_massage_clients(fullname, email, phone, service_type, membership_type, amount_paid, dates) VALUES(?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssis", $client_name, $client_email, $client_phone, $service_type, $membership_type, $amount_paid, $currentDate);
         if (!$stmt->execute()) {
             $error = $stmt->error;
         } else {
@@ -223,6 +225,14 @@ if (isset($_POST['registerSaunaClient'])) {
 
                                     </select>
 
+                                </div>
+                                <div class="mb-3">
+                                    <label for="membershipType" class="form-label">Membership Type</label>
+                                    <select class="form-select" id="membershipType" name="membershipType"
+                                        aria-label="Default select example" required>
+                                        <option value="Daily" selected>Daily</option>
+                                        <option value="Monthly">Monthly</option>
+                                    </select>
                                 </div>
 
                                 <div class="mb-3">
