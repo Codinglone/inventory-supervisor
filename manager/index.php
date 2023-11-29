@@ -191,8 +191,54 @@ if (isset($_POST['addOrganization'])) {
                         <div class="p-3 d-flex justify-content-between" style="width: 1000px;">
                             <div class="bg-primary py-2"
                                 style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
-                                <span class="h4 text-white text-center">All Registered Clients</span>
-                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">100</span>
+                               
+    <span class="h4 text-white text-center">Today's Total Income</span>
+    <span class="h3 text-white text-center mt-4" style="font-weight: 600;">
+        <?php
+        // Assuming you have a valid database connection ($link)
+        $currentDate = date('Y-m-d'); // Get the current date in the format used in your database
+
+        // Query for gym income
+        $gymIncomeQuery = "SELECT SUM(amount_paid) as total_gym_income FROM gym_clients WHERE dates = '$currentDate'";
+        $gymIncomeResult = $link->query($gymIncomeQuery);
+        $gymIncomeRow = mysqli_fetch_array($gymIncomeResult);
+        $totalGymIncome = $gymIncomeRow['total_gym_income'];
+
+        // Query for room income
+        $roomIncomeQuery = "SELECT SUM(amount_paid) as total_room_income FROM rooms_clients WHERE checkin_date = '$currentDate'";
+        $roomIncomeResult = $link->query($roomIncomeQuery);
+        $roomIncomeRow = mysqli_fetch_array($roomIncomeResult);
+        $totalRoomIncome = $roomIncomeRow['total_room_income'];
+
+        // Query for sauna & massage income
+        $saunaMassageIncomeQuery = "SELECT SUM(amount_paid) as total_sauna_massage_income FROM sauna_massage_clients WHERE dates = '$currentDate'";
+        $saunaMassageIncomeResult = $link->query($saunaMassageIncomeQuery);
+        $saunaMassageIncomeRow = mysqli_fetch_array($saunaMassageIncomeResult);
+        $totalSaunaMassageIncome = $saunaMassageIncomeRow['total_sauna_massage_income'];
+
+        // Add more departments as needed
+        $incomeQuery = "SELECT SUM(price * quantity) as total_income FROM restaurent_products_transactions WHERE dates = '$currentDate'";
+        $incomeResult = $link->query($incomeQuery);
+        $incomeRow = mysqli_fetch_array($incomeResult);
+        $totalRestaurentIncome = $incomeRow['total_income'];
+
+        $incomeQueryS = "SELECT SUM(price_per_unit * quantity) as total_income FROM supermarket_products_transactions WHERE dates = '$currentDate'";
+        $incomeResultS = $link->query($incomeQueryS);
+        $incomeRowS = mysqli_fetch_array($incomeResultS);
+        $totalSupermarketIncome = $incomeRowS['total_income'];
+
+        $incomeQueryC = "SELECT SUM(price_per_unit * quantity) as total_income FROM cyber_products_transactions WHERE dates = '$currentDate'";
+        $incomeResultC = $link->query($incomeQueryC);
+        $incomeRowC = mysqli_fetch_array($incomeResultC);
+        $totalCyberIncome = $incomeRowC['total_income'];
+
+        // Calculate the total income from
+        $total_income = $totalGymIncome + $totalRoomIncome + $totalSaunaMassageIncome + $totalRestaurentIncome + $totalSupermarketIncome + $totalCyberIncome;
+        echo $total_income;
+        
+        ?>
+    </span>
+
                             </div>
                             <div class="bg-success py-2" style="width: 22%; display: flex; flex-direction: column; border-radius: 6px;">
                             <span class="h4 text-white text-center">Today's Gym Income</span>
@@ -200,7 +246,7 @@ if (isset($_POST['addOrganization'])) {
         <?php
         // Assuming you have a valid database connection ($link)
         $currentDate = date('Y-m-d'); // Get the current date in the format used in your database
-
+        
         $incomeQuery = "SELECT SUM(amount_paid) as total_income FROM gym_clients WHERE dates = '$currentDate'";
         $incomeResult = $link->query($incomeQuery);
         $incomeRow = mysqli_fetch_array($incomeResult);
@@ -217,7 +263,7 @@ if (isset($_POST['addOrganization'])) {
         <?php
         // Assuming you have a valid database connection ($link)
         $currentDate = date('Y-m-d'); // Get the current date in the format used in your database
-
+        
         $query = "SELECT COUNT(*) as total_records FROM rooms_clients";
         $client_sel = $link->query($query);
         $client_row = mysqli_fetch_array($client_sel);
@@ -239,7 +285,7 @@ if (isset($_POST['addOrganization'])) {
         <?php
         // Assuming you have a valid database connection ($link)
         $currentDate = date('Y-m-d'); // Get the current date in the format used in your database
-
+        
         $query = "SELECT COUNT(*) as total_records FROM sauna_massage_clients";
         $client_sel = $link->query($query);
         $client_row = mysqli_fetch_array($client_sel);
@@ -257,56 +303,106 @@ if (isset($_POST['addOrganization'])) {
 
                         </div>
                         <div class="p-3 d-flex justify-content-between" style="width: 1000px;">
-                        <div class="bg-success py-2"
-                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
-                                <span class="h4 text-white text-center">All Restaurent Products</span>
-                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php
-                                $query = "SELECT COUNT(*) as total_records FROM restaurent_products";
-                                $client_sel = $link->query($query);
-                                $client_row = mysqli_fetch_array($client_sel);
-                                ?>
-                                <?php echo $client_row['total_records']; ?>
-                                </span>
-                            </div>
-                            <div class="bg-secondary py-2"
-                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
-                                <span class="h4 text-white text-center">All Supermarket Products</span>
-                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php
-                                $query = "SELECT COUNT(*) as total_records FROM supermarket_products";
-                                $client_sel = $link->query($query);
-                                $client_row = mysqli_fetch_array($client_sel);
-                                ?>
-                                <?php echo $client_row['total_records']; ?>
-                                </span>
-                            </div>
-                            <div class="bg-primary py-2"
-                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
-                                <span class="h4 text-white text-center">All Registered Rooms</span>
-                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php
-                                $query = "SELECT COUNT(*) as total_records FROM rooms";
-                                $client_sel = $link->query($query);
-                                $client_row = mysqli_fetch_array($client_sel);
-                                ?>
-                                <?php echo $client_row['total_records']; ?>
-                                </span>
-                            </div>
+                        <div class="bg-success py-2" style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+    <span class="h5 text-white text-center">Today's Restaurant Income</span>
+    <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+        <?php
+        // Assuming you have a valid database connection ($link)
+        $currentDate = date('Y-m-d'); // Get the current date in the format used in your database
+        
+        $incomeQuery = "SELECT SUM(price * quantity) as total_income FROM restaurent_products_transactions WHERE dates = '$currentDate'";
+        $incomeResult = $link->query($incomeQuery);
+        $incomeRow = mysqli_fetch_array($incomeResult);
+        $totalIncome = $incomeRow['total_income'];
+
+        echo $totalIncome ? $totalIncome : 0;
+        ?>
+    </span>
+</div>
+
+<div class="bg-secondary py-2" style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+    <span class="h5 text-white text-center">Today's Supermarket Income</span>
+    <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+        <?php
+        // Assuming you have a valid database connection ($link)
+        $currentDate = date('Y-m-d'); // Get the current date in the format used in your database
+        
+        $incomeQuery = "SELECT SUM(price_per_unit * quantity) as total_income FROM supermarket_products_transactions WHERE dates = '$currentDate'";
+        $incomeResult = $link->query($incomeQuery);
+        $incomeRow = mysqli_fetch_array($incomeResult);
+        $totalIncome = $incomeRow['total_income'];
+
+        echo $totalIncome ? $totalIncome : 0;
+        ?>
+    </span>
+</div>
+<div class="bg-primary py-2" style="width:22%;display: flex;flex-direction:column;border-radius: 6px;">
+    <span class="h5 text-white text-center">Today's Cyber Total Income</span>
+    <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+        <?php
+        // Assuming you have a valid database connection ($link)
+        $currentDate = date('Y-m-d'); // Get the current date in the format used in your database
+        
+        $incomeQuery = "SELECT SUM(price_per_unit * quantity) as total_income FROM cyber_products_transactions WHERE dates = '$currentDate'";
+        $incomeResult = $link->query($incomeQuery);
+        $incomeRow = mysqli_fetch_array($incomeResult);
+        $totalIncome = $incomeRow['total_income'];
+
+        echo $totalIncome ? $totalIncome : 0;
+        ?>
+    </span>
+</div>
                             
                             
-                            <div class="py-2"
-                                style="width:22%;display: flex;flex-direction:column;border-radius: 6px;background-color: teal;">
-                                <span class="h4 text-white text-center">All Gym Organizations</span>
-                                <span class="h3 text-white text-center mt-4" style="font-weight:600;">
-                                <?php
-                                $query = "SELECT COUNT(*) as total_records FROM gym_organizations";
-                                $client_sel = $link->query($query);
-                                $client_row = mysqli_fetch_array($client_sel);
-                                ?>
-                                <?php echo $client_row['total_records']; ?>
-                                </span>
-                            </div>
+<div class="py-2" style="width:22%;display: flex;flex-direction:column;border-radius: 6px;background: teal;">
+<span class="h5 text-white text-center">Today's Total Number of Clients</span>
+    <span class="h3 text-white text-center mt-4" style="font-weight:600;">
+        <?php
+        // Assuming you have a valid database connection ($link)
+        $currentDate = date('Y-m-d'); // Get the current date in the format used in your database
+        // Query for gym clients
+        $gymQuery = "SELECT COUNT(*) as total_gym_clients FROM gym_clients WHERE dates = '$currentDate'";
+        $gymResult = $link->query($gymQuery);
+        $gymRow = mysqli_fetch_array($gymResult);
+        $totalGymClients = $gymRow['total_gym_clients'];
+
+        // Query for room clients
+        $roomQuery = "SELECT COUNT(*) as total_room_clients FROM rooms_clients WHERE checkin_date = '$currentDate'";
+        $roomResult = $link->query($roomQuery);
+        $roomRow = mysqli_fetch_array($roomResult);
+        $totalRoomClients = $roomRow['total_room_clients'];
+
+
+        // Query for sauna & massage clients
+        $saunaMassageQuery = "SELECT COUNT(*) as total_sauna_massage_clients FROM sauna_massage_clients WHERE dates = '$currentDate'";
+        $saunaMassageResult = $link->query($saunaMassageQuery);
+        $saunaMassageRow = mysqli_fetch_array($saunaMassageResult);
+        $totalSaunaMassageClients = $saunaMassageRow['total_sauna_massage_clients'];
+
+        // Query for cyber products transactions
+        $cyberProductsQuery = "SELECT COUNT(*) as total_cyber_products_clients FROM cyber_products_transactions WHERE dates = '$currentDate'";
+        $cyberProductsResult = $link->query($cyberProductsQuery);
+        $cyberProductsRow = mysqli_fetch_array($cyberProductsResult);
+        $totalCyberProductsClients = $cyberProductsRow['total_cyber_products_clients'];
+
+        // Query for restaurant products transactions
+        $restaurantProductsQuery = "SELECT COUNT(*) as total_restaurant_products_clients FROM restaurent_products_transactions WHERE dates = '$currentDate'";
+        $restaurantProductsResult = $link->query($restaurantProductsQuery);
+        $restaurantProductsRow = mysqli_fetch_array($restaurantProductsResult);
+        $totalRestaurantProductsClients = $restaurantProductsRow['total_restaurant_products_clients'];
+
+        // Query for supermarket products transactions
+        $supermarketProductsQuery = "SELECT COUNT(*) as total_supermarket_products_clients FROM supermarket_products_transactions WHERE dates = '$currentDate'";
+        $supermarketProductsResult = $link->query($supermarketProductsQuery);
+        $supermarketProductsRow = mysqli_fetch_array($supermarketProductsResult);
+        $totalSupermarketProductsClients = $supermarketProductsRow['total_supermarket_products_clients'];
+
+
+        echo $totalSaunaMassageClients ? $totalRoomClients + $totalGymClients + $totalSaunaMassageClients + $totalCyberProductsClients + $totalRestaurantProductsClients + $totalSupermarketProductsClients : 0;
+        ?>
+    </span>
+</div>
+
                             
                         </div>
                     </div>
@@ -337,29 +433,29 @@ if (isset($_POST['addOrganization'])) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['fullname']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['email']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['phone']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['service_type']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['amount_paid']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['dates']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['fullname']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['email']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['phone']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['service_type']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['amount_paid']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['dates']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
 
                                 </tbody>
@@ -390,20 +486,20 @@ if (isset($_POST['addOrganization'])) {
                       $count += 1;
                       $id = $rows['id'];
                       ?>
-                            <tr>
-                              <td>
-                                <?php echo $count; ?>
-                              </td>
-                              <td>
-                                <?php echo $rows['product_name']; ?>
-                              </td>
-                              <td>
-                                <?php echo $rows['price_per_unit']; ?>
-                              </td>
-                              <td>
-                                <?php echo $rows['quantity']; ?>
-                              </td>
-                            </tr>
+                                    <tr>
+                                      <td>
+                                        <?php echo $count; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $rows['product_name']; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $rows['price_per_unit']; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $rows['quantity']; ?>
+                                      </td>
+                                    </tr>
                   <?php } ?>
 
                 </tbody>
@@ -435,23 +531,23 @@ if (isset($_POST['addOrganization'])) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['product_name']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['price']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['quantity']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['dates']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['product_name']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['price']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['quantity']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['dates']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -484,26 +580,26 @@ if (isset($_POST['addOrganization'])) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['fullname']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['membership_type']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['organization']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['amount_paid']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['dates']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['fullname']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['membership_type']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['organization']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['amount_paid']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['dates']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
 
                                 </tbody>
@@ -532,14 +628,14 @@ if (isset($_POST['addOrganization'])) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['organization_name']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['organization_name']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
 
                                 </tbody>
@@ -574,29 +670,29 @@ if (isset($_POST['addOrganization'])) {
                                         $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$rows[room_id]'");
                                         $room_row = mysqli_fetch_array($room_name_sel);
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['fullname']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['phone']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['checkin_date']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['checkout_date']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $room_row['room_name']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['amount_paid']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['fullname']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['phone']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['checkin_date']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['checkout_date']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $room_row['room_name']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['amount_paid']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -626,20 +722,20 @@ if (isset($_POST['addOrganization'])) {
                       $count += 1;
                       $id = $rows['id'];
                       ?>
-                            <tr>
-                              <td>
-                                <?php echo $count; ?>
-                              </td>
-                              <td>
-                                <?php echo $rows['product_name']; ?>
-                              </td>
-                              <td>
-                                <?php echo $rows['unit_price']; ?>
-                              </td>
-                              <td>
-                                <?php echo $rows['quantity']; ?>
-                              </td>
-                            </tr>
+                                    <tr>
+                                      <td>
+                                        <?php echo $count; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $rows['product_name']; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $rows['unit_price']; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $rows['quantity']; ?>
+                                      </td>
+                                    </tr>
                   <?php } ?>
 
                 </tbody>
@@ -684,23 +780,23 @@ if (isset($_POST['addOrganization'])) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['product_name']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['price_per_unit']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['quantity']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['dates']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['product_name']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['price_per_unit']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['quantity']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['dates']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -729,17 +825,17 @@ if (isset($_POST['addOrganization'])) {
                       $count += 1;
                       $id = $rows['id'];
                       ?>
-                            <tr>
-                              <td>
-                                <?php echo $count; ?>
-                              </td>
-                              <td>
-                                <?php echo $rows['product_name']; ?>
-                              </td>
-                              <td>
-                                <?php echo $rows['price']; ?>
-                              </td>
-                            </tr>
+                                    <tr>
+                                      <td>
+                                        <?php echo $count; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $rows['product_name']; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $rows['price']; ?>
+                                      </td>
+                                    </tr>
                   <?php } ?>
                 </tbody>
               </table>
@@ -770,23 +866,23 @@ if (isset($_POST['addOrganization'])) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['product_name']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['price_per_unit']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['quantity']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['dates']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['product_name']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['price_per_unit']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['quantity']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['dates']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -817,23 +913,23 @@ if (isset($_POST['addOrganization'])) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['fullname']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['email']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['password']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['role']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['fullname']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['email']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['password']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['role']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -863,20 +959,20 @@ if (isset($_POST['addOrganization'])) {
                                         $count += 1;
                                         $id = $rows['id'];
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $count; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['room_name']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['room_price']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $rows['room_status']; ?>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['room_name']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['room_price']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $rows['room_status']; ?>
+                                                            </td>
+                                                        </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
