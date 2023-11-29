@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 28, 2023 at 03:15 PM
+-- Generation Time: Nov 29, 2023 at 02:09 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -39,9 +39,10 @@ CREATE TABLE `cyber_products` (
 --
 
 INSERT INTO `cyber_products` (`id`, `product_name`, `quantity`, `price_per_unit`) VALUES
-(1, 'Pen', 10, 100),
+(1, 'Pen', 7, 100),
 (2, 'Notebooks', 16, 600),
-(8, 'Pencil', 50, 200);
+(8, 'Pencil', 50, 200),
+(11, 'Mathematical Set', 1, 500);
 
 -- --------------------------------------------------------
 
@@ -67,7 +68,29 @@ INSERT INTO `cyber_products_transactions` (`id`, `product_name`, `quantity`, `pr
 (3, 'Pen', 2, 100, '2023-11-23'),
 (4, 'Pen', 7, 100, '2023-11-23'),
 (5, 'Notebooks', 2, 600, '2023-11-23'),
-(6, 'Notebooks', 2, 600, '2023-11-23');
+(6, 'Notebooks', 2, 600, '2023-11-23'),
+(7, 'Pen', 1, 100, '2023-11-28'),
+(8, 'Pen', 2, 100, '2023-11-28'),
+(9, 'Mathematical Set', 1, 500, '2023-11-29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `daily_total_income`
+--
+
+CREATE TABLE `daily_total_income` (
+  `id` int(11) NOT NULL,
+  `dates` varchar(255) NOT NULL,
+  `total_income` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `daily_total_income`
+--
+
+INSERT INTO `daily_total_income` (`id`, `dates`, `total_income`) VALUES
+(3, '2023-11-29', 42000);
 
 -- --------------------------------------------------------
 
@@ -89,7 +112,8 @@ CREATE TABLE `gym_clients` (
 --
 
 INSERT INTO `gym_clients` (`id`, `fullname`, `membership_type`, `organization`, `dates`, `amount_paid`) VALUES
-(1, 'NIYOKWIZERWA Fabrice', 'Daily', 'Personal', '2023-11-24', 2000);
+(1, 'NIYOKWIZERWA Fabrice', 'Daily', 'Personal', '2023-11-24', 2000),
+(2, 'UWAYO Benjamin', 'Daily', 'Personal', '2023-11-29', 2000);
 
 -- --------------------------------------------------------
 
@@ -130,7 +154,8 @@ CREATE TABLE `restaurent_products` (
 --
 
 INSERT INTO `restaurent_products` (`id`, `product_name`, `price`) VALUES
-(1, 'Hot Dog', 1000);
+(1, 'Hot Dog', 1000),
+(3, 'Milkshake', 2000);
 
 -- --------------------------------------------------------
 
@@ -152,7 +177,9 @@ CREATE TABLE `restaurent_products_transactions` (
 
 INSERT INTO `restaurent_products_transactions` (`id`, `product_name`, `quantity`, `price`, `dates`) VALUES
 (1, 'Hot Dog', 2, 1000, '2023-11-23'),
-(2, 'Hot Dog', 1, 1000, '2023-11-23');
+(2, 'Hot Dog', 1, 1000, '2023-11-23'),
+(3, 'Hot Dog', 3, 1000, '2023-11-28'),
+(4, 'Milkshake', 3, 2000, '2023-11-29');
 
 -- --------------------------------------------------------
 
@@ -211,6 +238,7 @@ CREATE TABLE `sauna_massage_clients` (
   `email` varchar(255) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `service_type` varchar(255) NOT NULL,
+  `membership_type` varchar(255) NOT NULL,
   `amount_paid` int(11) NOT NULL,
   `dates` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -219,8 +247,9 @@ CREATE TABLE `sauna_massage_clients` (
 -- Dumping data for table `sauna_massage_clients`
 --
 
-INSERT INTO `sauna_massage_clients` (`id`, `fullname`, `email`, `phone`, `service_type`, `amount_paid`, `dates`) VALUES
-(1, 'NIYOKWIZERWA Fabrice', 'codinglone@gmail.com', '+250784427142', 'Sauna & Massage', 1000, '2023-11-28 12:54:56');
+INSERT INTO `sauna_massage_clients` (`id`, `fullname`, `email`, `phone`, `service_type`, `membership_type`, `amount_paid`, `dates`) VALUES
+(1, 'NIYOKWIZERWA Eric', 'codinglone@gmail.com', '+250784427142', 'Sauna & Massage', 'Monthly', 1000, '2023-11-28'),
+(2, 'Habimana Eric', 'erichabimana@gmail.com', '0783217831', 'Sauna & Massage', 'Daily', 10000, '2023-11-29');
 
 -- --------------------------------------------------------
 
@@ -240,7 +269,7 @@ CREATE TABLE `supermarket_products` (
 --
 
 INSERT INTO `supermarket_products` (`id`, `product_name`, `unit_price`, `quantity`) VALUES
-(1, 'Inyange milk', 700, 10),
+(1, 'Inyange milk', 700, 5),
 (2, 'Milinda Juice', 1000, 4),
 (3, 'Inyange Juice Apple', 800, 10);
 
@@ -264,7 +293,8 @@ CREATE TABLE `supermarket_products_transactions` (
 
 INSERT INTO `supermarket_products_transactions` (`id`, `product_name`, `quantity`, `price_per_unit`, `dates`) VALUES
 (1, 'Inyange milk', 3, 700, '2023-11-23'),
-(2, 'Inyange milk', 7, 700, '2023-11-23');
+(2, 'Inyange milk', 7, 700, '2023-11-23'),
+(3, 'Inyange milk', 5, 700, '2023-11-29');
 
 -- --------------------------------------------------------
 
@@ -308,6 +338,12 @@ ALTER TABLE `cyber_products`
 -- Indexes for table `cyber_products_transactions`
 --
 ALTER TABLE `cyber_products_transactions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `daily_total_income`
+--
+ALTER TABLE `daily_total_income`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -380,19 +416,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cyber_products`
 --
 ALTER TABLE `cyber_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `cyber_products_transactions`
 --
 ALTER TABLE `cyber_products_transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `daily_total_income`
+--
+ALTER TABLE `daily_total_income`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `gym_clients`
 --
 ALTER TABLE `gym_clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `gym_organizations`
@@ -404,13 +446,13 @@ ALTER TABLE `gym_organizations`
 -- AUTO_INCREMENT for table `restaurent_products`
 --
 ALTER TABLE `restaurent_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `restaurent_products_transactions`
 --
 ALTER TABLE `restaurent_products_transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rooms`
@@ -428,19 +470,19 @@ ALTER TABLE `rooms_clients`
 -- AUTO_INCREMENT for table `sauna_massage_clients`
 --
 ALTER TABLE `sauna_massage_clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `supermarket_products`
 --
 ALTER TABLE `supermarket_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `supermarket_products_transactions`
 --
 ALTER TABLE `supermarket_products_transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
