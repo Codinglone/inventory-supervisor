@@ -188,7 +188,7 @@ if (isset($_POST['registerSaunaClient'])) {
                 </div>
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-md-2 d-flex justify-center">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-md-2 px-lg-0 d-flex justify-center">
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="registerSaunaClients">
                         <!-- Content for Cyber Products tab -->
@@ -255,11 +255,11 @@ if (isset($_POST['registerSaunaClient'])) {
                                     <tr>
                                         <th>#</th>
                                         <th>Fullname</th>
-                                        <th>Email</th>
                                         <th>Phone</th>
                                         <th>Service Type</th>
-                                        <th>Amount Paid</th>
+                                        <th>Membership Type</th>
                                         <th>Date Recorded</th>
+                                        <th>Action</th>
 
                                     </tr>
                                 </thead>
@@ -280,19 +280,22 @@ if (isset($_POST['registerSaunaClient'])) {
                                                 <?php echo $rows['fullname']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['email']; ?>
-                                            </td>
-                                            <td>
                                                 <?php echo $rows['phone']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $rows['service_type']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $rows['amount_paid']; ?>
+                                                <?php echo $rows['membership_type']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $rows['dates']; ?>
+                                            </td>
+                                            <td>
+                                            <form method="POST" action="generate_receipt.php" target="_blank">
+                        <input type="hidden" name="transaction_id" value="<?php echo $id; ?>">
+                        <button type="submit" class="btn btn-primary">Print Receipt</button>
+                    </form>
                                             </td>
                                         </tr>
                                     <?php } ?>
