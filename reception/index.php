@@ -406,6 +406,7 @@ if (isset($_POST['registerRoomClient'])) {
                                         <th>Checkout Date</th>
                                         <th>Room Name</th>
                                         <th>Amount Paid</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -415,6 +416,7 @@ if (isset($_POST['registerRoomClient'])) {
                                     $room_sel = $link->query("SELECT * FROM rooms_clients");
                                     while ($rows = mysqli_fetch_array($room_sel)) {
                                         $count += 1;
+                                        $id = $rows['id'];
                                         $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$rows[room_id]'");
                                         $room_row = mysqli_fetch_array($room_name_sel);
                                         ?>
@@ -439,6 +441,12 @@ if (isset($_POST['registerRoomClient'])) {
                                             </td>
                                             <td>
                                                 <?php echo $rows['amount_paid']; ?>
+                                            </td>
+                                            <td>
+                                            <form method="POST" action="generate_receipt.php" target="_blank">
+                        <input type="hidden" name="transaction_id" value="<?php echo $id; ?>">
+                        <button type="submit" class="btn btn-primary">Print Receipt</button>
+                    </form>
                                             </td>
                                         </tr>
                                     <?php } ?>

@@ -14,12 +14,13 @@ $transactionId = isset($_POST['transaction_id']) ? $_POST['transaction_id'] : nu
 
 if ($transactionId) {
     // Fetch transaction details from the database based on the transaction ID
-    $query = "SELECT * FROM cyber_products_transactions WHERE id = $transactionId";
+    $query = "SELECT * FROM rooms_clients WHERE id = $transactionId";
     $result = mysqli_query($link, $query);
 
     if ($result) {
         $transactionData = mysqli_fetch_assoc($result);
-        $total = $transactionData['price_per_unit'] * $transactionData['quantity'];
+        $room_name_sel = $link->query("SELECT * FROM rooms WHERE id = '$transactionData[room_id]'");
+        $room_row = mysqli_fetch_array($room_name_sel);
         // Generate the receipt HTML
         $receiptHTML = "
             <html>
@@ -34,13 +35,14 @@ if ($transactionId) {
             </head>
             <body>
                 <h2>Receipt for Transaction ID: $transactionId</h2>
-                <p><strong>Product Name:</strong> {$transactionData['product_name']}</p>
-                <p><strong>Unit Price in RWF:</strong> {$transactionData['price_per_unit']}</p>
-                <p><strong>Quantity:</strong> {$transactionData['quantity']}</p>
-                <p><strong>Date Sold:</strong> {$transactionData['dates']}</p>
+                <p><strong>Client Names:</strong> {$transactionData['fullname']}</p>
+                <p><strong>Client Phone:</strong> {$transactionData['phone']}</p>
+                <p><strong>Room name:</strong> {$room_row['room_name']}</p>
+                <p><strong>Check-in Date:</strong> {$transactionData['checkin_date']}</p>
+                <p><strong>Check-out Date:</strong> {$transactionData['checkout_date']}</p>
                 <br>
                 <br>
-                <p><strong>Total:</strong> {$total} FRW</p>
+                <p><strong>Total Amount:</strong> {$transactionData['amount_paid']} FRW</p>
                 
                 <p style='position: fixed;bottom:0;left:0;'><strong>Powered By:</strong> Yoben Technology</p>
                 <!-- Add more details as needed -->

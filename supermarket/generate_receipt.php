@@ -19,7 +19,7 @@ if ($transactionId) {
 
     if ($result) {
         $transactionData = mysqli_fetch_assoc($result);
-
+        $total = $transactionData['price_per_unit'] * $transactionData['quantity'];
         // Generate the receipt HTML
         $receiptHTML = "
             <html>
@@ -38,6 +38,11 @@ if ($transactionId) {
                 <p><strong>Unit Price in RWF:</strong> {$transactionData['price_per_unit']}</p>
                 <p><strong>Quantity:</strong> {$transactionData['quantity']}</p>
                 <p><strong>Date Sold:</strong> {$transactionData['dates']}</p>
+                <br>
+                <br>
+                <p><strong>Total:</strong> {$total} FRW</p>
+                
+                <p style='position: fixed;bottom:0;left:0;'><strong>Powered By:</strong> Yoben Technology</p>
                 <!-- Add more details as needed -->
 
                 <!-- You can customize the receipt layout further -->
